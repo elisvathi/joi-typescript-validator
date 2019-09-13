@@ -4,7 +4,7 @@
     "description": "Class decorations based validations using JOI as a backend",
     "main": "lib/index.js",
     "scripts": {
-        "test": "node lib/test.js"
+        "test": "mocha -r ts-node/register tests/**/*.spec.ts"
     },
     "keywords": [
         "typescript",
@@ -16,8 +16,16 @@
     "author": "Elis Vathi",
     "license": "MIT",
     "devDependencies": {
+        "@types/chai": "^4.2.2",
+        "@types/debug": "^4.1.5",
         "@types/joi": "^14.3.3",
-        "@types/node": "^12.7.5"
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.7.5",
+        "chai": "^4.2.0",
+        "mocha": "^6.2.0",
+        "ts-node": "^8.3.0",
+        "tslint": "^5.20.0",
+        "typescript": "^3.6.3"
     },
     "dependencies": {
         "joi": "^14.3.1",

@@ -3,6 +3,10 @@ import { FieldDescription } from "../decorators/BaseDecorators";
 import Joi from 'joi';
 import { getMetadata } from "./MetadataHelpers";
 
+/**
+ * Builds the schema for the string field 
+ * @param tp Field description metadata
+ */
 function buildJoiString(tp: FieldDescription) {
     if (tp.nonempty) {
         tp.minLength = Math.max(tp.minLength || 0, 1);
@@ -20,6 +24,10 @@ function buildJoiString(tp: FieldDescription) {
     return val;
 }
 
+/**
+ * Builds the schema for the number field 
+ * @param tp Field description metadata
+ */
 function buildJoiNumber(tp: FieldDescription) {
     let val = Joi.number();
     if (tp.minValue) {
@@ -65,7 +73,7 @@ function buildJoiArray(tp: FieldDescription) {
 }
 
 /**
- *  Builds the existing schema with global conditions for all types 
+ * Builds the existing schema with global conditions for all types 
  * @param val existing JOI schema
  * @param tp   Field description metadata 
  */
@@ -100,6 +108,10 @@ function buildJoiObject(tp: FieldDescription) {
     return Joi.object().keys(payload);
 }
 
+/**
+ * Checks the type of the field and returns the child schema accordingly 
+ * @param tp field description object
+ */
 function buildJoiChildren(tp: FieldDescription) {
     const primitives = ["String", "Boolean", "Number", "Array"];
     let val;
@@ -122,7 +134,7 @@ function buildJoiChildren(tp: FieldDescription) {
 }
 
 /**
- *  Returns the schema for the root type 
+ * Returns the schema for the root type 
  * @param tp type to validate 
  */
 export function buildJoiRoot(tp: any): Joi.Schema {
