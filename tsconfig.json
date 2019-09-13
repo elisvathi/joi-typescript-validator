@@ -8,8 +8,7 @@
         "emitDecoratorMetadata": true,
         "sourceMap": false,
         "declaration": true,
-        "declarationMap": true,
-        "removeComments": true,
+        "removeComments": false,
         "types": [ "joi", "reflect-metadata"],
         "outDir": "lib"
     },

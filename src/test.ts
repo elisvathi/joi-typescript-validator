@@ -1,5 +1,14 @@
 import 'reflect-metadata'
-import { Required, Optional, ValidOptions, Nullable, ItemType, MinLength, MaxLength, Max, Min, Email } from "./decorators/BaseDecorators";
+import { Required,
+         Optional,
+         ValidOptions,
+         Nullable,
+         ItemType,
+         MinLength,
+         MaxLength,
+         Max,
+         Min,
+         Email } from "./decorators/BaseDecorators";
 import { Validate } from './utils/BuilderUtils';
 
 class TestChild {
@@ -38,7 +47,7 @@ class Test {
     age: number;
 
     @Required()
-    @ValidOptions('Thrive', 'Voluum')
+    @ValidOptions('user1', 'user2')
     type: string;
 
     @Required()
@@ -64,9 +73,12 @@ class Test {
     data: Array<TestChild>;
 
 }
-
+class Undecorated{
+    user: string;
+}
+const t2 = new Undecorated();
 const t = new Test();
-t.type = "Thrive";
+t.type = "user1";
 t.age = 15;
 t.child = null;
 const tc = new TestChild();
@@ -75,9 +87,6 @@ const tc2 = new TestChild();
 t.data = [tc, tc2];
 t.value = 'a@a.a';
 t.numberValue = 1;
-// t.data = [1];
-// printMetadata(t)
-// console.log(Validate(t));
 Validate(t).then((r)=>{
     console.log("VALID:", r);
 }).catch(err=>console.error("INVALID:", err.message));

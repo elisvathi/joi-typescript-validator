@@ -3,16 +3,16 @@ import { FieldDescription } from "../decorators/BaseDecorators";
 import Joi from 'joi';
 import { getMetadata } from "./MetadataHelpers";
 
-function buildJoiString(val: any, tp: FieldDescription) {
+function buildJoiString(tp: FieldDescription) {
     if (tp.nonempty) {
-        tp.minlength = Math.max(tp.minlength || 0, 1);
+        tp.minLength = Math.max(tp.minLength || 0, 1);
     }
-    val = Joi.string();
-    if (tp.minlength) {
-        val = val.min(tp.minlength);
+    let val = Joi.string();
+    if (tp.minLength) {
+        val = val.min(tp.minLength);
     }
-    if (tp.maxlength) {
-        val = val.max(tp.maxlength);
+    if (tp.maxLength) {
+        val = val.max(tp.maxLength);
     }
     if (tp.email) {
         val = val.email();
@@ -20,8 +20,8 @@ function buildJoiString(val: any, tp: FieldDescription) {
     return val;
 }
 
-function buildJoiNumber(val: any, tp: FieldDescription) {
-    val = Joi.number();
+function buildJoiNumber(tp: FieldDescription) {
+    let val = Joi.number();
     if (tp.minValue) {
         val = val.min(tp.minValue.value);
         if (tp.minValue.exclude) {
@@ -42,23 +42,33 @@ function buildJoiNumber(val: any, tp: FieldDescription) {
     }
     return val;
 }
-function buildJoiArray(val: any, tp: FieldDescription) {
+
+/**
+ * Builds a Joi array schema 
+ * @param tp Field description metadata
+ */
+function buildJoiArray(tp: FieldDescription) {
     if (tp.nonempty) {
-        tp.minlength = Math.max(tp.minlength || 0, 1);
+        tp.minLength = Math.max(tp.minLength || 0, 1);
     }
-    val = Joi.array();
+    let val = Joi.array();
     if (tp.typeInfo) {
-        val = val.items(buildJoiChilds({ designType: tp.typeInfo }));
+        val = val.items(buildJoiChildren({ designType: tp.typeInfo }));
     }
-    if (tp.minlength) {
-        val = val.min(tp.minlength);
+    if (tp.minLength) {
+        val = val.min(tp.minLength);
     }
-    if (tp.maxlength) {
-        val = val.max(tp.maxlength);
+    if (tp.maxLength) {
+        val = val.max(tp.maxLength);
     }
     return val;
 }
 
+/**
+ *  Builds the existing schema with global conditions for all types 
+ * @param val existing JOI schema
+ * @param tp   Field description metadata 
+ */
 function buildJoiGlobals(val: any, tp: FieldDescription) {
     if (tp.nullable) {
         val = val.allow(null);
@@ -74,43 +84,65 @@ function buildJoiGlobals(val: any, tp: FieldDescription) {
     return val;
 }
 
-function buildJoiChilds(tp: FieldDescription) {
+/**
+ * Returns Joi schema for a non-primitive or array object 
+ * @param tp Field description metadata 
+ */
+function buildJoiObject(tp: FieldDescription) {
+    const payload: any = {};
+    const metadata = getMetadata(tp.designType);
+    if (!metadata) {
+        return Joi.any();
+    }
+    Object.keys(metadata).forEach(x => {
+        payload[x] = buildJoiChildren(metadata[x]);
+    })
+    return Joi.object().keys(payload);
+}
+
+function buildJoiChildren(tp: FieldDescription) {
     const primitives = ["String", "Boolean", "Number", "Array"];
     let val;
     if (primitives.includes(tp.designType.name)) {
         const typename = tp.designType.name;
         if (typename === 'String') {
-            val = buildJoiString(val, tp);
+            val = buildJoiString(tp);
         } else if (typename === 'Boolean') {
             val = Joi.boolean();
         } else if (typename === 'Number') {
-            val = buildJoiNumber(val, tp);
+            val = buildJoiNumber(tp);
         } else if (typename === 'Array') {
-            val = buildJoiArray(val, tp);
+            val = buildJoiArray(tp);
         }
     } else {
-        const payload: any = {};
-        const metadata = getMetadata(tp.designType);
-        Object.keys(metadata).forEach(x => {
-            payload[x] = buildJoiChilds(metadata[x]);
-        })
-        val = Joi.object().keys(payload);
+        val = buildJoiObject(tp);
     }
     val = buildJoiGlobals(val, tp);
     return val;
 }
 
-export function buildJoiRoot(tp: any): Joi.ObjectSchema {
-    const testMetadata = getMetadata(tp);
+/**
+ *  Returns the schema for the root type 
+ * @param tp type to validate 
+ */
+export function buildJoiRoot(tp: any): Joi.Schema {
+    const metadata = getMetadata(tp);
+    if (!metadata) {
+        return Joi.any();
+    }
     const payload: any = {}
-    Object.keys(testMetadata).forEach(x => {
-        payload[x] = buildJoiChilds(testMetadata[x]);
+    Object.keys(metadata).forEach(x => {
+        payload[x] = buildJoiChildren(metadata[x]);
     })
     return Joi.object().keys(payload);
 }
 
+/**
+ * Validates the object, returns the object if success, or throws a Joi Validation Error 
+ * @param obj Any object
+ */
 export async function Validate(obj: any) {
     const cp: any = obj.constructor;
-    const validator: Joi.ObjectSchema = buildJoiRoot(cp);
+    const validator: Joi.Schema = buildJoiRoot(cp);
     return Joi.validate(obj, validator);
 }

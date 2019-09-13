@@ -1,125 +1,245 @@
 import 'reflect-metadata'
+
 export const MetadataKeys = {
-    Required: 'validate:is_required',
-    Type: 'validate:type',
     Fields: 'validate:fields'
 }
-export interface Threshold{
-    value:number;
+
+/**
+ *  Threshold used for min and max constraints for numbers,
+ *  if exclude specified,
+ *  adjusts if the threshold value is inclusive or exclusive 
+ */
+export interface Threshold {
+    value: number;
     exclude?: boolean;
 }
+
+/**
+ *  Metadata used for all annotated fields 
+ */
 export interface FieldDescription {
+    /**
+     * Design type of the field
+     */
     designType?: any;
+    /**
+     * Required flag
+     */
     required?: boolean;
-    options? : any[];
+    /**
+     * Constraint field content on the instance to one of these values if specified 
+     */
+    options?: any[];
+    /**
+     *  The field can contain null value 
+     */
     nullable?: boolean;
+    /**
+     *  Type specified if the field is an array 
+     */
     typeInfo?: any;
+    /**
+     *  Flag if the string field should be an email 
+     */
     email?: boolean;
+    /**
+     *  Max value for number fields 
+     */
     maxValue?: Threshold;
+    /**
+     *  Min Value for number fields 
+     */
     minValue?: Threshold;
+    /**
+     *  Specifies if number should be positive 
+     */
     positive?: boolean;
+    /**
+     *  Specifies if number should be negative 
+     */
     negative?: boolean;
+    /**
+     *  Specifies if string or array field should be non-empty, changes the minLength value to the max of 1 and existing minlength
+     */
     nonempty?: boolean;
-    minlength?: number;
-    maxlength?: number;
+    /**
+     *  Min length for array and string values
+     */
+    minLength?: number;
+    /**
+     *  Max length for array and string values
+     */
+    maxLength?: number;
 }
 
-function setFieldDescription(target: any, propertyKey: string, description: FieldDescription){
+/**
+ *  Attaches the default metadata such es design:type to the field descriptions,
+ *  keeps the existing metadata if any,
+ *  and adds the new metadata to that field
+ * @param target  Target class
+ * @param propertyKey Field name
+ * @param description Partial field metadata object
+ */
+function setFieldDescription(target: any, propertyKey: string, description: FieldDescription) {
     const DesignType = Reflect.getMetadata('design:type', target, propertyKey);
     let existingFields: { [key: string]: FieldDescription } = Reflect.getMetadata(MetadataKeys.Fields, target);
     existingFields = existingFields || {};
     existingFields[propertyKey] = existingFields[propertyKey] || {};
     existingFields[propertyKey].designType = DesignType;
-    existingFields[propertyKey] = {...existingFields[propertyKey], ...description};
+    existingFields[propertyKey] = { ...existingFields[propertyKey], ...description };
     Reflect.defineMetadata(MetadataKeys.Fields, existingFields, target);
 }
 
+/**
+ * Marks field as required
+ * If overridden by Optional the required flag might be turned off depending which decorations gets called last
+ */
 export function Required() {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {required: true};
+        const description: FieldDescription = { required: true };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
+/**
+ * Allows the field to have null value
+ */
 export function Nullable() {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {nullable: true};
+        const description: FieldDescription = { nullable: true };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
+/**
+ * Marks field as optional
+ * If overridden by Required the required flag might be turned on depending which decorations gets called last
+ */
 export function Optional() {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {required: false};
-        setFieldDescription(target, propertyKey, description);
-    }
-}
-export function ItemType(tp: any){
-    return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {typeInfo: tp};
+        const description: FieldDescription = { required: false };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function Max(value: Threshold){
+/**
+ *  Used to specify the array type
+ * @param tp Array item type  (must be a Class not interface or type since it will be used as a value )
+ */
+export function ItemType(tp: any) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {maxValue: value};
+        const description: FieldDescription = { typeInfo: tp };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function MaxLength(value: number){
+/**
+ * Max value for a number field 
+ * @param value Number or threshold object
+ */
+export function Max(value: Threshold | number) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {maxlength: value};
+        let mValue: Threshold;
+        if (typeof (value) === 'number') {
+            mValue = { value: value as number };
+        } else {
+            mValue = value as Threshold;
+        }
+        const description: FieldDescription = { maxValue: mValue };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function Min(value: Threshold){
+/**
+ * Max length for a string or array field 
+ * @param value maxLength
+ */
+export function MaxLength(value: number) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {minValue: value};
+        const description: FieldDescription = { maxLength: value };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function Positive(){
+/**
+ * Min value for a number field 
+ * @param value Number or threshold object 
+ */
+export function Min(value: Threshold | number) {
+    let mValue: Threshold;
+    if (typeof (value) === 'number') {
+        mValue = { value: value as number };
+    } else {
+        mValue = value as Threshold;
+    }
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {positive: true};
+        const description: FieldDescription = { minValue: mValue };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function Negative(){
+/**
+ * Positive number only 
+ * @param enable Optional , use if you need to disable in derived classes 
+ */
+export function Positive(enable:boolean = true) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {negative: true};
+        const description: FieldDescription = { positive: enable };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function NotEmpty(){
+/**
+ * Negative number only 
+ * @param enable Optional, use if you need to disable in derived classes 
+ */
+export function Negative(enable:boolean=true) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {nonempty: true};
+        const description: FieldDescription = { negative: enable };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function MinLength(value: number){
+/**
+ * Non empty array or string
+ * @param enable Optional, use if you need to disable in derived classes 
+ */
+export function NotEmpty(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {minlength: value};
+        const description: FieldDescription = { nonempty: enable };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
+/**
+ * Minimum length for arrays and strings 
+ * @param value 
+ */
+export function MinLength(value: number) {
+    return function(target: any, propertyKey: string) {
+        const description: FieldDescription = { minLength: value };
+        setFieldDescription(target, propertyKey, description);
+    }
+}
+
+/**
+ * Specify a list of allowed values for the field 
+ * @param args List of allowed values 
+ */
 export function ValidOptions(...args: any[]) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {options: args};
+        const description: FieldDescription = { options: args };
         setFieldDescription(target, propertyKey, description);
     }
 }
 
-export function Email(){
+/**
+ * Non empty arrays or strings
+ * @param enable Optional, use if you need to disable in derived classes 
+ */
+export function Email(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = {email: true};
+        const description: FieldDescription = { email: enable };
         setFieldDescription(target, propertyKey, description);
     }
 }
