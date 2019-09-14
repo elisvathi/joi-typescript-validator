@@ -53,7 +53,7 @@ Invalidates the object if the field doesn't exist
 ```typescript
     class Example {
         @Required()
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -71,7 +71,7 @@ Turns off the required flag for the field
 ```typescript
     class Example {
         @Optional()
-        public fields: string;
+        public field: string;
     }
 
     // Joi schema
@@ -87,7 +87,7 @@ Allows the field to have ***null*** as a value
 ```typescript
     class Example {
         @Nullable()
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -98,7 +98,7 @@ or...
 ```typescript
     class Example {
         @Nullable()
-        public fields: string;
+        public field: string;
     }
 
     class Derived extends Example {
@@ -107,7 +107,7 @@ or...
          * a derived class
          * */
         @Nullable(false)
-        public fields: string;
+        public field: string;
     }
 ```
 
@@ -121,7 +121,7 @@ Allows only the values provided in the arguments
 ```typescript
     class Example {
         @ValidOptions('name', 'age')
-        public fields: string;
+        public field: string;
     }
 
     // Joi schema
@@ -139,7 +139,7 @@ Specifies the max value for the field
 ```typescript
     class Example {
         @Max(42)
-        public fields: number;
+        public field: number;
     }
     
     // Joi schema
@@ -153,7 +153,7 @@ or...
          * Excludes the value from being accepted 
          * */
         @Max({value: 42, exclude: true})
-        public fields: number;
+        public field: number;
     }
     
     // Joi schema
@@ -169,7 +169,7 @@ Specifies the min value for the field
 ```typescript
     class Example {
         @Min(42)
-        public fields: number;
+        public field: number;
     }
     
     // Joi schema
@@ -183,7 +183,7 @@ or...
          * Excludes the value from being accepted 
          * */
         @Min({value: 42, exclude: true})
-        public fields: number;
+        public field: number;
     }
     
     // Joi schema
@@ -199,7 +199,7 @@ Allows positive values only to the number field
 ```typescript
     class Example {
         @Positive()
-        public fields: number;
+        public field: number;
     }
 
     // Joi schema
@@ -208,7 +208,7 @@ Allows positive values only to the number field
     class Derived extends Example {
         // Use the flags if you need to override it when you inherit
         @Positive(false)
-        public fields: number;
+        public field: number;
     }
 ```
 
@@ -221,7 +221,7 @@ Allows negative values only to the number field
 ```typescript
     class Example {
         @Negative()
-        public fields: number;
+        public field: number;
     }
 
     // Joi schema
@@ -230,7 +230,7 @@ Allows negative values only to the number field
     class Derived extends Example {
         // Use the flags if you need to override it when you inherit
         @Negative(false)
-        public fields: number;
+        public field: number;
     }
 ```
 
@@ -245,7 +245,7 @@ Sets a lower limit to the string length
 ```typescript
     class Example {
         @MinLength(42)
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -261,7 +261,7 @@ Sets an upper limit to the string length
 ```typescript
     class Example {
         @MaxLength(42)
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -277,7 +277,7 @@ Sets the string lower limit to 1 character
 ```typescript
     class Example {
         @NotEmpty()
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -286,7 +286,7 @@ Sets the string lower limit to 1 character
     class Derived extends Example {
         // Use the flag if you want to disable the NotEmpty check on a derived class
         @NotEmpty(false)
-        public fields: string;
+        public field: string;
     }
 ```
 
@@ -299,7 +299,7 @@ String field should be a valid email
 ```typescript
     class Example {
         @Email()
-        public fields: string;
+        public field: string;
     }
     
     // Joi schema
@@ -308,7 +308,7 @@ String field should be a valid email
     class Derived extends Example {
         // Use the flag if you want to disable the Email check on a derived class
         @Email(false)
-        public fields: string;
+        public field: string;
     }
 ```
 ## Array Decorators
@@ -327,7 +327,7 @@ Is required to specify the array item type if the array items should be validate
 
     class Example {
         @ItemType(Item)
-        public fields: Item[];
+        public field: Item[];
     }
     
     // Joi schema
@@ -345,7 +345,7 @@ Sets a lower limit to the array length
 ```typescript
     class Example {
         @MinLength(42)
-        public fields: string[];
+        public field: string[];
     }
     
     // Joi schema
@@ -361,7 +361,7 @@ Sets an upper limit to the array length
 ```typescript
     class Example {
         @MaxLength(42)
-        public fields: string[];
+        public field: string[];
     }
     
     // Joi schema
@@ -377,7 +377,7 @@ Sets the array lower limit to 1 item
 ```typescript
     class Example {
         @NotEmpty()
-        public fields: string[];
+        public field: string[];
     }
     
     // Joi schema
@@ -386,7 +386,7 @@ Sets the array lower limit to 1 item
     class Derived extends Example {
         // Use the flag if you want to disable the NotEmpty check on a derived class
         @NotEmpty(false)
-        public fields: string[];
+        public field: string[];
     }
 ```
 ## Nested Validations
