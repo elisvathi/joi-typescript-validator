@@ -4,7 +4,8 @@
     "description": "Class decorations based validations using JOI as a backend",
     "main": "lib/index.js",
     "scripts": {
-        "test": "mocha -r ts-node/register tests/**/*.spec.ts"
+        "unit-tests": "mocha -r ts-node/register tests/**/*.spec.ts",
+        "test": "node lib/test.js"
     },
     "keywords": [
         "typescript",

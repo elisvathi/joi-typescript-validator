@@ -137,7 +137,7 @@ function buildJoiChildren(tp: FieldDescription) {
  * Returns the schema for the root type 
  * @param tp type to validate 
  */
-export function buildJoiRoot(tp: any): Joi.Schema {
+function buildJoiRoot(tp: any): Joi.Schema {
     const metadata = getMetadata(tp);
     if (!metadata) {
         return Joi.any();
@@ -147,6 +147,14 @@ export function buildJoiRoot(tp: any): Joi.Schema {
         payload[x] = buildJoiChildren(metadata[x]);
     })
     return Joi.object().keys(payload);
+}
+
+/**
+ * Returns the schema for the root type 
+ * @param tp type to validate 
+ */
+export function getSchema(tp: any): Joi.Schema{
+    return buildJoiRoot(tp);
 }
 
 /**

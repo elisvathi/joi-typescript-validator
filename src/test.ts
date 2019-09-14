@@ -1,82 +1,61 @@
-import 'reflect-metadata'
-import { Required,
-         Optional,
-         ValidOptions,
-         Nullable,
+import "reflect-metadata";
+import { Email,
          ItemType,
-         MinLength,
-         MaxLength,
          Max,
+         MaxLength,
          Min,
-         Email } from "./decorators/BaseDecorators";
-import { Validate } from './utils/BuilderUtils';
+         MinLength,
+         Nullable,
+         Optional,
+         Required,
+         ValidOptions } from "./decorators/BaseDecorators";
+import { Validate } from "./utils/BuilderUtils";
 
 class TestChild {
     @Optional()
-    id: string;
+    public id: string;
 }
-class User{
-
-    @Required()
-    @Email()
-    public email: string;
-
-    @Required()
-    @MaxLength(30)
-    @MinLength(5)
-    public username: string;
-
-    @Required()
-    @MaxLength(30)
-    @MinLength(5)
-    public password: string;
-
-    @Optional()
-    @Min({value: 18})
-    @Max({value: 30, exclude: true})
-    public age: number;
-}
-
+// tslint:disable-next-line: max-classes-per-file
 class Test {
 
     @Optional()
-    name: string;
+    public name: string;
 
     @ValidOptions(1, 2, 3, 4, 5, 15)
     @Optional()
-    age: number;
+    public age: number;
 
     @Required()
-    @ValidOptions('user1', 'user2')
-    type: string;
+    @ValidOptions("user1", "user2")
+    public type: string;
 
     @Required()
     @MinLength(2)
     @MaxLength(7)
     @Email()
-    value: string;
+    public value: string;
 
     @Required()
     @Max({value: 3, exclude: true})
     @Min({value: 1})
-    numberValue: number;
+    public numberValue: number;
 
     @Optional()
-    valid: true;
+    public valid: true;
 
     @Required()
     @Nullable()
-    child: TestChild | null;
+    public child: TestChild | null;
 
     @Optional()
     @ItemType(TestChild)
-    data: Array<TestChild>;
+    public data: TestChild[];
 
 }
-class Undecorated{
-    user: string;
+// tslint:disable-next-line: max-classes-per-file
+class Undecorated {
+    public user: string;
 }
-const t2 = new Undecorated();
 const t = new Test();
 t.type = "user1";
 t.age = 15;
@@ -85,8 +64,9 @@ const tc = new TestChild();
 tc.id = "Hello";
 const tc2 = new TestChild();
 t.data = [tc, tc2];
-t.value = 'a@a.a';
+t.value = "a@a.a";
 t.numberValue = 1;
-Validate(t).then((r)=>{
+Validate(t).then((r) => {
     console.log("VALID:", r);
-}).catch(err=>console.error("INVALID:", err.message));
+}).catch((err) => console.error("INVALID:", err.message));
+// printMetadata(T2);

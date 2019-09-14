@@ -13,7 +13,9 @@ export interface Threshold {
     value: number;
     exclude?: boolean;
 }
-
+export class ClassDescription {
+    fields?: { [key: string]: FieldDescription };
+}
 /**
  *  Metadata used for all annotated fields 
  */
@@ -81,13 +83,17 @@ export interface FieldDescription {
  * @param description Partial field metadata object
  */
 function setFieldDescription(target: any, propertyKey: string, description: FieldDescription) {
+    const name = target.constructor.name;
     const DesignType = Reflect.getMetadata('design:type', target, propertyKey);
-    let existingFields: { [key: string]: FieldDescription } = Reflect.getMetadata(MetadataKeys.Fields, target);
-    existingFields = existingFields || {};
+    let existingInstance: { [name: string]: ClassDescription } = Reflect.getMetadata(MetadataKeys.Fields, target);
+    existingInstance = existingInstance || {};
+    existingInstance[name] = existingInstance[name] || {};
+    let existingFields: any = existingInstance[name].fields || {};
     existingFields[propertyKey] = existingFields[propertyKey] || {};
     existingFields[propertyKey].designType = DesignType;
     existingFields[propertyKey] = { ...existingFields[propertyKey], ...description };
-    Reflect.defineMetadata(MetadataKeys.Fields, existingFields, target);
+    existingInstance[name].fields = existingFields;
+    Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
 /**
@@ -104,9 +110,9 @@ export function Required() {
 /**
  * Allows the field to have null value
  */
-export function Nullable() {
+export function Nullable(enable: boolean=true) {
     return function(target: any, propertyKey: string) {
-        const description: FieldDescription = { nullable: true };
+        const description: FieldDescription = { nullable: enable };
         setFieldDescription(target, propertyKey, description);
     }
 }
@@ -182,7 +188,7 @@ export function Min(value: Threshold | number) {
  * Positive number only 
  * @param enable Optional , use if you need to disable in derived classes 
  */
-export function Positive(enable:boolean = true) {
+export function Positive(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { positive: enable };
         setFieldDescription(target, propertyKey, description);
@@ -193,7 +199,7 @@ export function Positive(enable:boolean = true) {
  * Negative number only 
  * @param enable Optional, use if you need to disable in derived classes 
  */
-export function Negative(enable:boolean=true) {
+export function Negative(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { negative: enable };
         setFieldDescription(target, propertyKey, description);
