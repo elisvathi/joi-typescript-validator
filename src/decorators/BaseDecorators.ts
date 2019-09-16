@@ -1,4 +1,6 @@
 import 'reflect-metadata'
+import Joi from 'joi';
+
 
 export const MetadataKeys = {
     Fields: 'validate:fields'
@@ -9,10 +11,20 @@ export const MetadataKeys = {
  *  if exclude specified,
  *  adjusts if the threshold value is inclusive or exclusive 
  */
+
+export type SchemaFunction = (args: Joi.Schema) => Joi.Schema;
+export type SchemaArgs = Joi.Schema | SchemaFunction;
 export interface Threshold {
     value: number;
     exclude?: boolean;
 }
+
+export interface ConditionSchema {
+    condition: (args: any) => boolean,
+    truthy: Joi.Schema,
+    falsy: Joi.Schema
+}
+
 export class ClassDescription {
     fields?: { [key: string]: FieldDescription };
 }
@@ -20,6 +32,8 @@ export class ClassDescription {
  *  Metadata used for all annotated fields 
  */
 export interface FieldDescription {
+    conditional?: ConditionSchema;
+    customSchema?: SchemaArgs;
     /**
      * Design type of the field
      */
@@ -259,3 +273,9 @@ export function DateString(format: string = 'YYYY-MM-DD') {
     }
 }
 
+export function CustomSchema(schema: SchemaArgs) {
+    return function(target: any, propertyKey: string) {
+        const description: FieldDescription = { customSchema: schema };
+        setFieldDescription(target, propertyKey, description);
+    }
+}

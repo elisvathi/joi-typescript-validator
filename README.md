@@ -24,6 +24,7 @@ Status: Work in progress
         - [MaxLength Decorator](#maxlength-decorator)
         - [NotEmpty Decorator](#notempty-decorator)
         - [Email Decorator](#email-decorator)
+        - [DateString Decorator](#datestring-decorator)
     - [Array Decorators](#array-decorators)
         - [ItemType Decorator](#itemtype-decorator)
         - [MinLength Decorator](#minlength-decorator-1)
@@ -31,6 +32,8 @@ Status: Work in progress
         - [NotEmpty Decorator](#notempty-decorator-1)
     - [Date Decorators](#date-decorators)
         - [DateString format decorator](#datestring-format-decorator)
+    - [Custom Validation Schema](#custom-validation-schema)
+        - [CustomSchema Decorator](#customschema-decorator)
     - [Nested Validations](#nested-validations)
     - [Inheritance](#inheritance)
     - [Getting the validation schema](#getting-the-validation-schema)
@@ -38,7 +41,6 @@ Status: Work in progress
     - [Example](#example)
 
 <!-- markdown-toc end -->
-
 
 ## Installation
 
@@ -314,6 +316,26 @@ String field should be a valid email
         public field: string;
     }
 ```
+
+### DateString Decorator
+
+Validates the string as a date using the specified format
+
+#### Usage
+
+```typescript
+    class Example {
+        // Default is YYYY-MM-DD
+        @Required()
+        @Date('YY-MM-DD')
+        public date: string;
+    }
+    
+    // Joi schema
+    schema.date('YY-MM-DD');
+    
+```
+
 ## Array Decorators
 
 ### ItemType Decorator
@@ -406,12 +428,37 @@ Uses joi-date-extensions Extension as a backend
 
     class Example {
         @Required()
-        DateString('YYYY-MM-DD')
+        @DateString('YYYY-MM-DD')
         public date: Date;
     }
 
     // Joi schema
     Joi.date().format('YYYY-MM-DD').required();
+```
+
+## Custom Validation Schema
+
+### CustomSchema Decorator
+
+You can create a custom Joi schema for the field or append properties to existing one
+
+#### Usage
+
+```typescript
+
+    // Using a lambda function
+    class Example {
+        @Required()
+        @CustomSchema((current: Joi.Schema)=>Joi.optional())
+        public field: string;
+    }
+
+    // Creating a schema from scratch, overrides any pre-built schema from other decorators
+    class SecondExample {
+        @CustomSchema(Joi.string().optional())
+        public date: Date;
+    }
+
 ```
 
 ## Nested Validations

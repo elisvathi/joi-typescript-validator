@@ -1,25 +1,33 @@
 import "reflect-metadata";
-import { Email,
-         ItemType,
-         Max,
-         MaxLength,
-         Min,
-         MinLength,
-         Nullable,
-         Optional,
-         Required,
+import {
+    Email,
+    ItemType,
+    Max,
+    MaxLength,
+    Min,
+    MinLength,
+    Nullable,
+    Optional,
+    Required,
     ValidOptions,
-    DateString} from "./decorators/BaseDecorators";
+    DateString,
+    CustomSchema
+} from "./decorators/BaseDecorators";
+import Joi, { Schema } from 'joi';
 import { Validate } from "./utils/BuilderUtils";
-
+declare namespace Joi {
+    interface AnySchema {
+        decorate: any
+    }
+}
 class TestChild {
     @Optional()
     public id: string;
 }
 // tslint:disable-next-line: max-classes-per-file
 class Test {
-
-    @Optional()
+    @Email()
+    @CustomSchema((joi: Schema)=>joi.optional())
     public name: string;
 
     @ValidOptions(1, 2, 3, 4, 5, 15)
@@ -37,8 +45,8 @@ class Test {
     public value: string;
 
     @Required()
-    @Max({value: 3, exclude: true})
-    @Min({value: 1})
+    @Max({ value: 3, exclude: true })
+    @Min({ value: 1 })
     public numberValue: number;
 
     @Optional()
@@ -63,6 +71,7 @@ class Undecorated {
 }
 const t = new Test();
 t.type = "user1";
+t.name = 'elisvathi@outlook.com';
 t.age = 15;
 t.child = null;
 const tc = new TestChild();

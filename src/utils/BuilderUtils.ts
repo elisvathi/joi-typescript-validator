@@ -1,5 +1,5 @@
 
-import { FieldDescription } from "../decorators/BaseDecorators";
+import { FieldDescription, SchemaFunction } from "../decorators/BaseDecorators";
 import BaseJoi from 'joi';
 import JoiDateExtensions from "joi-date-extensions";
 import { getMetadata } from "./MetadataHelpers";
@@ -16,13 +16,19 @@ function buildJoiString(tp: FieldDescription) {
         tp.minLength = Math.max(tp.minLength || 0, 1);
     }
     let val = Joi.string();
+    if (tp.dateString) {
+        val = Joi.date();
+        if (tp.dateStringFormat) {
+            val = val.format(tp.dateStringFormat);
+        }
+    }
     if (tp.minLength) {
         val = val.min(tp.minLength);
     }
     if (tp.maxLength) {
         val = val.max(tp.maxLength);
     }
-    if (tp.email) {
+    if (tp.email && !tp.dateString) {
         val = val.email();
     }
     return val;
@@ -102,6 +108,17 @@ function buildJoiGlobals(val: any, tp: FieldDescription) {
         val = val.required();
     } else {
         val = val.optional();
+    }
+    if (tp.customSchema) {
+        const name = tp.customSchema.constructor.name;
+        if (!!name && name == 'Function') {
+            if (!val) {
+                val = BaseJoi.empty()
+            }
+            val = (tp.customSchema as SchemaFunction)(val);
+        } else {
+            val = tp.customSchema;
+        }
     }
     return val;
 }
