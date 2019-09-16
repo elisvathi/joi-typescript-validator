@@ -72,6 +72,8 @@ export interface FieldDescription {
      *  Max length for array and string values
      */
     maxLength?: number;
+    dateString?: boolean;
+    dateStringFormat?: string;
 }
 
 /**
@@ -110,7 +112,7 @@ export function Required() {
 /**
  * Allows the field to have null value
  */
-export function Nullable(enable: boolean=true) {
+export function Nullable(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { nullable: enable };
         setFieldDescription(target, propertyKey, description);
@@ -246,6 +248,13 @@ export function ValidOptions(...args: any[]) {
 export function Email(enable: boolean = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { email: enable };
+        setFieldDescription(target, propertyKey, description);
+    }
+}
+
+export function DateString(format: string = 'YYYY-MM-DD') {
+    return function(target: any, propertyKey: string) {
+        const description: FieldDescription = { dateString: true, dateStringFormat: format };
         setFieldDescription(target, propertyKey, description);
     }
 }

@@ -8,7 +8,8 @@ import { Email,
          Nullable,
          Optional,
          Required,
-         ValidOptions } from "./decorators/BaseDecorators";
+    ValidOptions,
+    DateString} from "./decorators/BaseDecorators";
 import { Validate } from "./utils/BuilderUtils";
 
 class TestChild {
@@ -51,6 +52,10 @@ class Test {
     @ItemType(TestChild)
     public data: TestChild[];
 
+    @Required()
+    @DateString()
+    public date: Date;
+
 }
 // tslint:disable-next-line: max-classes-per-file
 class Undecorated {
@@ -65,8 +70,12 @@ tc.id = "Hello";
 const tc2 = new TestChild();
 t.data = [tc, tc2];
 t.value = "a@a.a";
+(t as any).date = "2019-09-21";
 t.numberValue = 1;
-Validate(t).then((r) => {
+Validate(t, true).then((r) => {
+    console.log("VALID:", r);
+}).catch((err) => console.error("INVALID:", err.message));
+Validate(t, true).then((r) => {
     console.log("VALID:", r);
 }).catch((err) => console.error("INVALID:", err.message));
 // printMetadata(T2);

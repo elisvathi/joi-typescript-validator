@@ -1,12 +1,16 @@
 
 import { FieldDescription } from "../decorators/BaseDecorators";
-import Joi from 'joi';
+import BaseJoi from 'joi';
+import JoiDateExtensions from "joi-date-extensions";
 import { getMetadata } from "./MetadataHelpers";
-
+const Joi = BaseJoi.extend(JoiDateExtensions);
 /**
  * Builds the schema for the string field 
  * @param tp Field description metadata
  */
+
+const savedSchemas: { [key: string]: BaseJoi.Schema } = {};
+
 function buildJoiString(tp: FieldDescription) {
     if (tp.nonempty) {
         tp.minLength = Math.max(tp.minLength || 0, 1);
@@ -20,6 +24,16 @@ function buildJoiString(tp: FieldDescription) {
     }
     if (tp.email) {
         val = val.email();
+    }
+    return val;
+}
+
+function buildJoiDate(tp: FieldDescription) {
+    let val = Joi.date();
+    if (tp.dateString) {
+        if (tp.dateStringFormat) {
+            val = val.format(tp.dateStringFormat);
+        }
     }
     return val;
 }
@@ -113,7 +127,7 @@ function buildJoiObject(tp: FieldDescription) {
  * @param tp field description object
  */
 function buildJoiChildren(tp: FieldDescription) {
-    const primitives = ["String", "Boolean", "Number", "Array"];
+    const primitives = ["String", "Boolean", "Number", "Array", "Date"];
     let val;
     if (primitives.includes(tp.designType.name)) {
         const typename = tp.designType.name;
@@ -125,6 +139,8 @@ function buildJoiChildren(tp: FieldDescription) {
             val = buildJoiNumber(tp);
         } else if (typename === 'Array') {
             val = buildJoiArray(tp);
+        } else if (typename === 'Date') {
+            val = buildJoiDate(tp);
         }
     } else {
         val = buildJoiObject(tp);
@@ -137,7 +153,7 @@ function buildJoiChildren(tp: FieldDescription) {
  * Returns the schema for the root type 
  * @param tp type to validate 
  */
-function buildJoiRoot(tp: any): Joi.Schema {
+function buildJoiRoot(tp: any): BaseJoi.Schema {
     const metadata = getMetadata(tp);
     if (!metadata) {
         return Joi.any();
@@ -153,16 +169,23 @@ function buildJoiRoot(tp: any): Joi.Schema {
  * Returns the schema for the root type 
  * @param tp type to validate 
  */
-export function getSchema(tp: any): Joi.Schema{
-    return buildJoiRoot(tp);
+export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
+    if (savedSchemas[tp.name]) {
+        return savedSchemas[tp.name];
+    }
+    const result = buildJoiRoot(tp);
+    if (save) {
+        savedSchemas[tp.name] = result;
+    }
+    return result;
 }
 
 /**
  * Validates the object, returns the object if success, or throws a Joi Validation Error 
  * @param obj Any object
  */
-export async function Validate(obj: any) {
+export async function Validate(obj: any, save: boolean = true) {
     const cp: any = obj.constructor;
-    const validator: Joi.Schema = buildJoiRoot(cp);
+    const validator: BaseJoi.Schema = getSchema(cp, save);
     return Joi.validate(obj, validator);
 }
