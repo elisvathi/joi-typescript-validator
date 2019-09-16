@@ -1,6 +1,6 @@
 {
     "name": "joi-typescript-validator",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Class decorations based validations using JOI as a backend",
     "main": "lib/index.js",
     "scripts": {
@@ -32,5 +32,13 @@
         "joi": "^14.3.1",
         "joi-date-extensions": "^1.2.0",
         "reflect-metadata": "^0.1.13"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elisvathi/joi-typescript-validator.git"
+    },
+    "bugs": {
+        "url": "https://github.com/elisvathi/joi-typescript-validator/issues"
+    },
+    "homepage": "https://github.com/elisvathi/joi-typescript-validator#readme"
 }
