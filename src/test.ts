@@ -15,11 +15,7 @@ import {
 } from "./decorators/BaseDecorators";
 import Joi, { Schema } from 'joi';
 import { Validate } from "./utils/BuilderUtils";
-declare namespace Joi {
-    interface AnySchema {
-        decorate: any
-    }
-}
+
 class TestChild {
     @Optional()
     public id: string;
