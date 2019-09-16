@@ -449,7 +449,7 @@ You can create a custom Joi schema for the field or append properties to existin
     // Using a lambda function
     class Example {
         @Required()
-        @CustomSchema((current: Joi.Schema)=>Joi.optional())
+        @CustomSchema((current: Joi.Schema)=>current.optional())
         public field: string;
     }
 
