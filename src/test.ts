@@ -72,10 +72,7 @@ t.data = [tc, tc2];
 t.value = "a@a.a";
 (t as any).date = "2019-09-21";
 t.numberValue = 1;
+
 Validate(t, true).then((r) => {
     console.log("VALID:", r);
 }).catch((err) => console.error("INVALID:", err.message));
-Validate(t, true).then((r) => {
-    console.log("VALID:", r);
-}).catch((err) => console.error("INVALID:", err.message));
-// printMetadata(T2);

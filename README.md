@@ -2,7 +2,8 @@
 
 Allows to create validation schemas by using typescript decorators using [joi](https://github.com/hapijs/joi) as a backend
 
-Work is still in progress
+Status: Work in progress
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
@@ -28,14 +29,16 @@ Work is still in progress
         - [MinLength Decorator](#minlength-decorator-1)
         - [MaxLength Decorator](#maxlength-decorator-1)
         - [NotEmpty Decorator](#notempty-decorator-1)
+    - [Date Decorators](#date-decorators)
+        - [DateString format decorator](#datestring-format-decorator)
     - [Nested Validations](#nested-validations)
-    - [Usage](#usage-16)
     - [Inheritance](#inheritance)
     - [Getting the validation schema](#getting-the-validation-schema)
     - [Validating the object](#validating-the-object)
     - [Example](#example)
 
 <!-- markdown-toc end -->
+
 
 ## Installation
 
@@ -389,11 +392,33 @@ Sets the array lower limit to 1 item
         public field: string[];
     }
 ```
+
+## Date Decorators
+
+### DateString format decorator
+
+Specifies the format that the field should have as an input
+Uses joi-date-extensions Extension as a backend
+
+#### Usage
+
+```typescript
+
+    class Example {
+        @Required()
+        DateString('YYYY-MM-DD')
+        public date: Date;
+    }
+
+    // Joi schema
+    Joi.date().format('YYYY-MM-DD').required();
+```
+
 ## Nested Validations
 
 Validates the child fields if their type is another class
 
-## Usage
+### Usage
 
 ```typescript
     class ChildObject {
