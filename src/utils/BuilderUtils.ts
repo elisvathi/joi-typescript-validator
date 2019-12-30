@@ -1,11 +1,12 @@
-
-import { FieldDescription, SchemaFunction } from "../decorators/BaseDecorators";
-import BaseJoi from 'joi';
+import BaseJoi from "joi";
 import JoiDateExtensions from "joi-date-extensions";
-import { getMetadata } from "./MetadataHelpers";
+import { SchemaFunction } from "..";
+import { getMetadata, getOptions, getGlobalArgs } from "./MetadataHelpers";
+import { FieldDescription } from "../decorators/FieldDescription";
+
 const Joi = BaseJoi.extend(JoiDateExtensions);
 /**
- * Builds the schema for the string field 
+ * Builds the schema for the string field
  * @param tp Field description metadata
  */
 
@@ -45,7 +46,7 @@ function buildJoiDate(tp: FieldDescription) {
 }
 
 /**
- * Builds the schema for the number field 
+ * Builds the schema for the number field
  * @param tp Field description metadata
  */
 function buildJoiNumber(tp: FieldDescription) {
@@ -72,7 +73,7 @@ function buildJoiNumber(tp: FieldDescription) {
 }
 
 /**
- * Builds a Joi array schema 
+ * Builds a Joi array schema
  * @param tp Field description metadata
  */
 function buildJoiArray(tp: FieldDescription) {
@@ -93,9 +94,9 @@ function buildJoiArray(tp: FieldDescription) {
 }
 
 /**
- * Builds the existing schema with global conditions for all types 
+ * Builds the existing schema with global conditions for all types
  * @param val existing JOI schema
- * @param tp   Field description metadata 
+ * @param tp   Field description metadata
  */
 function buildJoiGlobals(val: any, tp: FieldDescription) {
     if (tp.nullable) {
@@ -111,21 +112,33 @@ function buildJoiGlobals(val: any, tp: FieldDescription) {
     }
     if (tp.customSchema) {
         const name = tp.customSchema.constructor.name;
-        if (!!name && name == 'Function') {
+        if (!!name && name === "Function") {
             if (!val) {
-                val = BaseJoi.empty()
+                val = BaseJoi.empty();
             }
             val = (tp.customSchema as SchemaFunction)(val);
         } else {
             val = tp.customSchema;
         }
     }
+    const globals = getGlobalArgs(tp.designType);
+    if (globals) {
+        const name = globals.constructor.name;
+        if (!!name && name === "Function") {
+            if (!val) {
+                val = BaseJoi.empty();
+            }
+            val = (tp.customSchema as SchemaFunction)(val);
+        } else {
+            val = globals;
+        }
+    }
     return val;
 }
 
 /**
- * Returns Joi schema for a non-primitive or array object 
- * @param tp Field description metadata 
+ * Returns Joi schema for a non-primitive or array object
+ * @param tp Field description metadata
  */
 function buildJoiObject(tp: FieldDescription) {
     const payload: any = {};
@@ -133,14 +146,19 @@ function buildJoiObject(tp: FieldDescription) {
     if (!metadata) {
         return Joi.any();
     }
-    Object.keys(metadata).forEach(x => {
+    Object.keys(metadata).forEach((x) => {
         payload[x] = buildJoiChildren(metadata[x]);
-    })
-    return Joi.object().keys(payload);
+    });
+    let result = Joi.object().keys(payload);
+    const options = getOptions(tp.designType);
+    if (options) {
+        result = result.options(options);
+    }
+    return result;
 }
 
 /**
- * Checks the type of the field and returns the child schema accordingly 
+ * Checks the type of the field and returns the child schema accordingly
  * @param tp field description object
  */
 function buildJoiChildren(tp: FieldDescription) {
@@ -148,15 +166,15 @@ function buildJoiChildren(tp: FieldDescription) {
     let val;
     if (primitives.includes(tp.designType.name)) {
         const typename = tp.designType.name;
-        if (typename === 'String') {
+        if (typename === "String") {
             val = buildJoiString(tp);
-        } else if (typename === 'Boolean') {
+        } else if (typename === "Boolean") {
             val = Joi.boolean();
-        } else if (typename === 'Number') {
+        } else if (typename === "Number") {
             val = buildJoiNumber(tp);
-        } else if (typename === 'Array') {
+        } else if (typename === "Array") {
             val = buildJoiArray(tp);
-        } else if (typename === 'Date') {
+        } else if (typename === "Date") {
             val = buildJoiDate(tp);
         }
     } else {
@@ -167,24 +185,42 @@ function buildJoiChildren(tp: FieldDescription) {
 }
 
 /**
- * Returns the schema for the root type 
- * @param tp type to validate 
+ * Returns the schema for the root type
+ * @param tp type to validate
  */
 function buildJoiRoot(tp: any): BaseJoi.Schema {
     const metadata = getMetadata(tp);
     if (!metadata) {
         return Joi.any();
     }
-    const payload: any = {}
-    Object.keys(metadata).forEach(x => {
+    const payload: any = {};
+    Object.keys(metadata).forEach((x) => {
         payload[x] = buildJoiChildren(metadata[x]);
-    })
-    return Joi.object().keys(payload);
+    });
+    let result = Joi.object().keys(payload);
+    const options = getOptions(tp);
+    if (options) {
+        result = result.options(options);
+    }
+    const globals = getGlobalArgs(tp);
+    if (globals) {
+        const name = globals.constructor.name;
+        if (!!name && name === "Function") {
+            if (!result) {
+                result = BaseJoi.empty();
+            }
+            result = (globals as SchemaFunction)(result);
+        } else {
+            result = globals;
+        }
+    }
+    return result;
 }
 
 /**
- * Returns the schema for the root type 
- * @param tp type to validate 
+ * Returns the schema for the root type
+ * @param tp type to validate
+ * @param save
  */
 export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
     if (savedSchemas[tp.name]) {
@@ -197,9 +233,14 @@ export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
     return result;
 }
 
+export function getSchemaDescription(tp: any, save: boolean = true): BaseJoi.Description {
+    return getSchema(tp, save).describe();
+}
+
 /**
- * Validates the object, returns the object if success, or throws a Joi Validation Error 
+ * Validates the object, returns the object if success, or throws a Joi Validation Error
  * @param obj Any object
+ * @param save
  */
 export async function Validate(obj: any, save: boolean = true) {
     const cp: any = obj.constructor;

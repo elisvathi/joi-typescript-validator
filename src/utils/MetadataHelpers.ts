@@ -1,22 +1,25 @@
-import { MetadataKeys, ClassDescription } from "../decorators/BaseDecorators";
-import 'reflect-metadata'
+import { ValidationOptions } from "joi";
+import "reflect-metadata";
+import { ClassDescription, MetadataKeys } from "..";
+import { SchemaArgs } from "../decorators/BaseDecorators";
 
 /**
- * Print class saved metadata 
- * @param obj Class 
+ * Print class saved metadata
+ * @param obj Class
  */
 export function printMetadata(obj: any) {
     const metadata = getMetadata(obj);
-    console.log(metadata);
+    console.dir(metadata, {depth: null});
 }
+
 /**
- * Extracts metadata for a particular object, aware if that object extends another objects, 
+ * Extracts metadata for a particular object, aware if that object extends another objects,
  * an joins the metadata properties accordingly ,
  * Method checks recursively through the same object to find super-class metadata
  * @param obj Object class to extract metadata for
- * @param treeMetadata  Metadata registered with Reflect 
+ * @param treeMetadata  Metadata registered with Reflect
  */
-function getMetadataFromObject(obj: any, treeMetadata: {[name: string]: ClassDescription}){
+function getMetadataFromObject(obj: any, treeMetadata: { [name: string]: ClassDescription }) {
     /**
      * Current class name
      */
@@ -31,35 +34,36 @@ function getMetadataFromObject(obj: any, treeMetadata: {[name: string]: ClassDes
      * Current class metadata
      * WIll override if necessary the super class metadata
      */
-    let existingObject = treeMetadata[name] || {};
-    if(!!protoName && protoName !== 'Object'){
-        let existingFields = existingObject.fields || {};
+    const existingObject = treeMetadata[name] || {};
+    if (!!protoName && protoName !== "Object") {
+        const existingFields = existingObject.fields || {};
         let superMetadata = getMetadataFromObject(proto, treeMetadata);
-        superMetadata = {...superMetadata}
-        Object.keys(existingFields).forEach(x=>{
-            if(!superMetadata[x]){
+        superMetadata = { ...superMetadata };
+        Object.keys(existingFields).forEach((x) => {
+            if (!superMetadata[x]) {
                 /**
-                 * If a property exist on the current class but not on the super class 
+                 * If a property exist on the current class but not on the super class
                  * insert the property
                  */
                 superMetadata[x] = existingFields[x];
-            }else{
+            } else {
                 /**
                  * Override the super class metadata for that field with the latest class field metadata
                  */
-                superMetadata[x] = {...superMetadata[x], ...existingFields[x]};
+                superMetadata[x] = { ...superMetadata[x], ...existingFields[x] };
             }
         });
         return superMetadata;
-    }else{
+    } else {
         return existingObject.fields || {};
     }
 
 }
+
 /**
- * Return type metadata 
+ * Return type metadata
  * TODO: Get metadata without needing to instantiate the object
- * @param obj 
+ * @param obj
  */
 export function getMetadata(obj: any) {
     const tp = new obj();
@@ -68,8 +72,34 @@ export function getMetadata(obj: any) {
      * Returns a key value object with all base classes and inheriting classes
      */
     const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
-    if(!retVal){
+    if (!retVal) {
         return;
     }
     return getMetadataFromObject(obj, retVal);
+}
+
+export function getOptions(obj: any): ValidationOptions {
+    const tp = new obj();
+    const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
+    if (!retVal) {
+        return;
+    }
+    if (!obj.name) {
+        return;
+    }
+    const selected = retVal[obj.name];
+    return selected.options;
+}
+
+export function getGlobalArgs(obj: any): SchemaArgs{
+    const tp = new obj();
+    const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
+    if (!retVal) {
+        return;
+    }
+    if (!obj.name) {
+        return;
+    }
+    const selected = retVal[obj.name];
+    return selected.globalArgs;
 }

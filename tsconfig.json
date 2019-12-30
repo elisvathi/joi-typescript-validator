@@ -12,7 +12,7 @@
         "types": [ "joi", "reflect-metadata", "mocha", "chai"],
         "outDir": "lib"
     },
-    "files": ["src/index.ts"],
+    "files": ["src/index.ts", "./src/decorators/FieldDescription.ts"],
     "include": ["src/**/*"],
     "exclude": ["node_modules"]
 }
