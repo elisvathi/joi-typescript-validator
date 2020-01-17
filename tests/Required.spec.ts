@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { Optional, Required } from "../src/decorators/BaseDecorators";
 import { Validate } from "../src/utils/BuilderUtils";
-import * as utils from "../src/utils/MetadataHelpers";
 
 class ClassWithRequiredField {
     @Required()
@@ -18,7 +17,7 @@ class RequiredOverridenByOptional {
 // tslint:disable-next-line: max-classes-per-file
 class BaseWithRequired {
     @Required()
-    public name: string;
+    public nameField: string;
     @Optional()
     public id: number;
 }
@@ -26,7 +25,7 @@ class BaseWithRequired {
 // tslint:disable-next-line: max-classes-per-file
 class DerivedWithOptional extends BaseWithRequired {
     @Optional()
-    public name: string;
+    public nameField: string;
 }
 
 // tslint:disable-next-line: max-classes-per-file

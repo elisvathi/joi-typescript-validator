@@ -31,6 +31,7 @@ export class ClassDescription {
     public globalArgs?: SchemaArgs;
     public options?: ValidationOptions;
 }
+export type TreeMetadata = Map<any, ClassDescription>;
 
 /**
  *  Attaches the default metadata such es design:type to the field descriptions,
@@ -41,34 +42,31 @@ export class ClassDescription {
  * @param description Partial field metadata object
  */
 function setFieldDescription(target: any, propertyKey: string, description: FieldDescription) {
-    const name = target.constructor.name;
     const DesignType = Reflect.getMetadata("design:type", target, propertyKey);
-    let existingInstance: { [name: string]: ClassDescription } = Reflect.getMetadata(MetadataKeys.Fields, target);
-    existingInstance = existingInstance || {};
-    existingInstance[name] = existingInstance[name] || {};
-    const existingFields: any = existingInstance[name].fields || {};
+    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target);
+    existingInstance = existingInstance || new Map();
+    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
+    const existingFields: any = existingInstance.get(target.constructor).fields || {};
     existingFields[propertyKey] = existingFields[propertyKey] || {};
     existingFields[propertyKey].designType = DesignType;
     existingFields[propertyKey] = { ...existingFields[propertyKey], ...description };
-    existingInstance[name].fields = existingFields;
+    existingInstance.get(target.constructor).fields = existingFields;
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
 function setSchemaGlobals(target: any, fun: SchemaArgs) {
-    const name = target.name;
-    let existingInstance: { [name: string]: ClassDescription } = Reflect.getMetadata(MetadataKeys.Fields, new target());
-    existingInstance = existingInstance || {};
-    existingInstance[name] = existingInstance[name] || {};
-    existingInstance[name].globalArgs = fun;
+    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, new target());
+    existingInstance = existingInstance || new Map();
+    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
+    existingInstance.get(target.constructor).globalArgs = fun;
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
 function setSchemaOptions(target: any, options: ValidationOptions){
-    const name = target.name;
-    let existingInstance: { [name: string]: ClassDescription } = Reflect.getMetadata(MetadataKeys.Fields, new target());
-    existingInstance = existingInstance || {};
-    existingInstance[name] = existingInstance[name] || {};
-    existingInstance[name].options = options;
+    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, new target());
+    existingInstance = existingInstance || new Map();
+    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
+    existingInstance.get(target.constructor).options = options;
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 

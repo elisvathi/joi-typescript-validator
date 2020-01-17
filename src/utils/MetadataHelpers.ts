@@ -1,7 +1,7 @@
 import { ValidationOptions } from "joi";
 import "reflect-metadata";
 import { ClassDescription, MetadataKeys } from "..";
-import { SchemaArgs } from "../decorators/BaseDecorators";
+import { SchemaArgs, TreeMetadata } from "../decorators/BaseDecorators";
 
 /**
  * Print class saved metadata
@@ -9,7 +9,7 @@ import { SchemaArgs } from "../decorators/BaseDecorators";
  */
 export function printMetadata(obj: any) {
     const metadata = getMetadata(obj);
-    console.dir(metadata, {depth: null});
+    console.dir(metadata, { depth: null });
 }
 
 /**
@@ -19,11 +19,11 @@ export function printMetadata(obj: any) {
  * @param obj Object class to extract metadata for
  * @param treeMetadata  Metadata registered with Reflect
  */
-function getMetadataFromObject(obj: any, treeMetadata: { [name: string]: ClassDescription }) {
+function getMetadataFromObject(obj: any, treeMetadata: TreeMetadata) {
     /**
      * Current class name
      */
-    const name = obj.name;
+    const name = obj;
     /**
      * Get prototype an prototype name of the class
      * to check if it extends from another class
@@ -34,7 +34,7 @@ function getMetadataFromObject(obj: any, treeMetadata: { [name: string]: ClassDe
      * Current class metadata
      * WIll override if necessary the super class metadata
      */
-    const existingObject = treeMetadata[name] || {};
+    const existingObject = treeMetadata.get(name) || {};
     if (!!protoName && protoName !== "Object") {
         const existingFields = existingObject.fields || {};
         let superMetadata = getMetadataFromObject(proto, treeMetadata);
@@ -62,16 +62,14 @@ function getMetadataFromObject(obj: any, treeMetadata: { [name: string]: ClassDe
 
 /**
  * Return type metadata
- * TODO: Get metadata without needing to instantiate the object
  * @param obj
  */
 export function getMetadata(obj: any) {
-    const tp = new obj();
     /**
      * Gets the metadata for the current class,
      * Returns a key value object with all base classes and inheriting classes
      */
-    const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
+    const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
     if (!retVal) {
         return;
     }
@@ -79,27 +77,33 @@ export function getMetadata(obj: any) {
 }
 
 export function getOptions(obj: any): ValidationOptions {
-    const tp = new obj();
-    const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
+    const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
     if (!retVal) {
         return;
     }
     if (!obj.name) {
         return;
     }
-    const selected = retVal[obj.name];
+    let selected = retVal.get(obj);
+    if (!selected) {
+        const result = getOptions(Object.getPrototypeOf(obj));
+        return result;
+    }
     return selected.options;
 }
 
-export function getGlobalArgs(obj: any): SchemaArgs{
-    const tp = new obj();
-    const retVal = Reflect.getMetadata(MetadataKeys.Fields, tp);
+export function getGlobalArgs(obj: any): SchemaArgs {
+    const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
     if (!retVal) {
         return;
     }
     if (!obj.name) {
         return;
     }
-    const selected = retVal[obj.name];
+    const selected = retVal.get(obj);
+    if (!selected) {
+        const result = getGlobalArgs(Object.getPrototypeOf(obj));
+        return result;
+    }
     return selected.globalArgs;
 }
