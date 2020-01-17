@@ -5,7 +5,7 @@
     "main": "lib/index.js",
     "scripts": {
         "unit-tests": "mocha -r ts-node/register tests/**/*.spec.ts",
-        "test": "node lib/test.js"
+        "test": "tsc --build && node lib/test.js"
     },
     "keywords": [
         "typescript",

@@ -10,7 +10,8 @@ const Joi = BaseJoi.extend(JoiDateExtensions);
  * @param tp Field description metadata
  */
 
-const savedSchemas: { [key: string]: BaseJoi.Schema } = {};
+// const savedSchemas: { [key: string]: BaseJoi.Schema } = {};
+const savedSchemas: Map<any, BaseJoi.Schema> = new Map<any, BaseJoi.Schema>();
 
 function buildJoiString(tp: FieldDescription) {
     if (tp.nonempty) {
@@ -223,12 +224,12 @@ function buildJoiRoot(tp: any): BaseJoi.Schema {
  * @param save
  */
 export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
-    if (savedSchemas[tp.name]) {
-        return savedSchemas[tp.name];
+    if (savedSchemas.has(tp)) {
+        return savedSchemas.get(tp);
     }
     const result = buildJoiRoot(tp);
     if (save) {
-        savedSchemas[tp.name] = result;
+        savedSchemas.set(tp, result);
     }
     return result;
 }
