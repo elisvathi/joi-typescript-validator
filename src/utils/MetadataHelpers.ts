@@ -1,6 +1,6 @@
 import { ValidationOptions } from "joi";
 import "reflect-metadata";
-import { ClassDescription, MetadataKeys } from "..";
+import { MetadataKeys } from "..";
 import { SchemaArgs, TreeMetadata } from "../decorators/BaseDecorators";
 
 /**

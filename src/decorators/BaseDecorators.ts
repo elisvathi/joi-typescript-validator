@@ -63,12 +63,10 @@ function setSchemaGlobals(target: any, fun: SchemaArgs) {
 }
 
 function setSchemaOptions(target: any, options: ValidationOptions){
-    console.log("Called set schema options", options);
     let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target.prototype);
     existingInstance = existingInstance || new Map();
     existingInstance.set(target, existingInstance.get(target) || {});
     existingInstance.get(target).options = options;
-    console.log("Existing instance", existingInstance);
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
