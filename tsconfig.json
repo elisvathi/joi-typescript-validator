@@ -9,10 +9,10 @@
         "sourceMap": false,
         "declaration": true,
         "removeComments": false,
-        "types": [ "joi", "reflect-metadata", "mocha", "chai"],
+        "types": ["joi", "reflect-metadata", "mocha", "chai"],
         "outDir": "lib"
     },
     "files": ["src/index.ts"],
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "src/**/flycheck*"]
 }
