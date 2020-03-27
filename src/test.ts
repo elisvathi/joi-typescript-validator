@@ -1,7 +1,7 @@
 import joi from 'joi';
 import "reflect-metadata";
 import { getSchema } from ".";
-import { Optional, SchemaOptions, ItemType } from "./decorators/BaseDecorators";
+import { ItemType, Optional, SchemaOptions } from "./decorators/BaseDecorators";
 
 @SchemaOptions({allowUnknown: true})
 class Test{
@@ -12,7 +12,7 @@ class Test{
     items: number[];
 }
 async function main(){
-    const t = {data: "test", test: false, items: ["st", "a", 3]};
+    const t = {data: "test", test: false, items: ["st", "a"]};
     const schema = getSchema(Test);
     const result = await joi.validate(t, schema);
     console.log("Result", result);

@@ -55,18 +55,20 @@ function setFieldDescription(target: any, propertyKey: string, description: Fiel
 }
 
 function setSchemaGlobals(target: any, fun: SchemaArgs) {
-    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, new target());
+    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target.prototype);
     existingInstance = existingInstance || new Map();
-    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
-    existingInstance.get(target.constructor).globalArgs = fun;
+    existingInstance.set(target, existingInstance.get(target) || {});
+    existingInstance.get(target).globalArgs = fun;
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
 function setSchemaOptions(target: any, options: ValidationOptions){
-    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, new target());
+    console.log("Called set schema options", options);
+    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target.prototype);
     existingInstance = existingInstance || new Map();
-    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
-    existingInstance.get(target.constructor).options = options;
+    existingInstance.set(target, existingInstance.get(target) || {});
+    existingInstance.get(target).options = options;
+    console.log("Existing instance", existingInstance);
     Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
