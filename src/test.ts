@@ -8,12 +8,13 @@ class Test{
     @Optional()
     data: string;
     @Optional()
-    @ItemType(String)
+    // @ItemType(String)
     items: number[];
 }
 async function main(){
     const t = {data: "test", test: false, items: ["st", "a"]};
     const schema = getSchema(Test);
+    console.dir(schema.describe(), {depth: null});
     const result = await joi.validate(t, schema);
     console.log("Result", result);
 }

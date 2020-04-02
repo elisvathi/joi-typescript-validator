@@ -84,6 +84,8 @@ function buildJoiArray(tp: FieldDescription) {
     let val = Joi.array();
     if (tp.typeInfo) {
         val = val.items(buildJoiChildren({ designType: tp.typeInfo }));
+    }else{
+        val = val.items(Joi.any())
     }
     if (tp.minLength) {
         val = val.min(tp.minLength);
