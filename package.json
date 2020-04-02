@@ -1,6 +1,6 @@
 {
     "name": "joi-typescript-validator",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Class decorations based validations using JOI as a backend",
     "main": "lib/index.js",
     "scripts": {
