@@ -1,22 +1,20 @@
-import joi from 'joi';
 import "reflect-metadata";
-import { getSchema } from ".";
-import { ItemType, Optional, SchemaOptions } from "./decorators/BaseDecorators";
+import { Validate } from ".";
+import { Optional, Required, SchemaOptions } from "./decorators/BaseDecorators";
 
 @SchemaOptions({allowUnknown: true})
 class Test{
     @Optional()
     data: string;
     @Optional()
-    // @ItemType(String)
     items: number[];
+    @Required()
+    something: number;
 }
 async function main(){
-    const t = {data: "test", test: false, items: ["st", "a"]};
-    const schema = getSchema(Test);
-    console.dir(schema.describe(), {depth: null});
-    const result = await joi.validate(t, schema);
-    console.log("Result", result);
+    const t = {data: "test", test: false, items: ["st", "a"], something: '12'};
+    const validated = await Validate(Test, t);
+    console.log(validated);
 }
 
 main().catch(console.log);

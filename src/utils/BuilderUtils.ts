@@ -245,8 +245,8 @@ export function getSchemaDescription(tp: any, save: boolean = true): BaseJoi.Des
  * @param obj Any object
  * @param save
  */
-export async function Validate(obj: any, save: boolean = true) {
-    const cp: any = obj.constructor;
+export async function Validate(ctor: any, obj: any, save: boolean = true) {
+    const cp: any = ctor;
     const validator: BaseJoi.Schema = getSchema(cp, save);
     return Joi.validate(obj, validator);
 }
