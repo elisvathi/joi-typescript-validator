@@ -12,7 +12,7 @@ export const MetadataKeys = {
  *  adjusts if the threshold value is inclusive or exclusive
  */
 
-export type SchemaFunction = (args: Joi.Schema) => Joi.Schema;
+export type SchemaFunction = (args: Joi.Schema) => Joi.Schema | Joi.Schema[];
 export type SchemaArgs = Joi.Schema | SchemaFunction;
 
 export interface Threshold {
