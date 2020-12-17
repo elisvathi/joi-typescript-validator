@@ -2,7 +2,7 @@ import BaseJoi from "joi";
 import JoiDateExtensions from "joi-date-extensions";
 import { SchemaFunction } from "..";
 import { getMetadata, getOptions, getGlobalArgs } from "./MetadataHelpers";
-import { FieldDescription } from "../decorators/FieldDescription";
+import { FieldDescription, DescKey } from "../decorators/FieldDescription";
 
 const Joi = BaseJoi.extend(JoiDateExtensions);
 /**
@@ -14,23 +14,23 @@ const Joi = BaseJoi.extend(JoiDateExtensions);
 const savedSchemas: Map<any, BaseJoi.Schema> = new Map<any, BaseJoi.Schema>();
 
 function buildJoiString(tp: FieldDescription) {
-    if (tp.nonempty) {
-        tp.minLength = Math.max(tp.minLength || 0, 1);
+    if (tp[DescKey.NON_EMPTY]) {
+        tp[DescKey.MIN_LENGTH] = Math.max(tp[DescKey.MIN_LENGTH] || 0, 1);
     }
     let val = Joi.string();
-    if (tp.dateString) {
+    if (tp[DescKey.DATE_STRING]) {
         val = Joi.date();
         if (tp.dateStringFormat) {
             val = val.format(tp.dateStringFormat);
         }
     }
-    if (tp.minLength) {
-        val = val.min(tp.minLength);
+    if (tp[DescKey.MIN_LENGTH]) {
+        val = val.min(tp[DescKey.MIN_LENGTH]);
     }
-    if (tp.maxLength) {
-        val = val.max(tp.maxLength);
+    if (tp[DescKey.MAX_LENGTH]) {
+        val = val.max(tp[DescKey.MAX_LENGTH]);
     }
-    if (tp.email && !tp.dateString) {
+    if (tp[DescKey.EMAIL] && !tp[DescKey.DATE_STRING]) {
         val = val.email();
     }
     return val;
@@ -38,7 +38,7 @@ function buildJoiString(tp: FieldDescription) {
 
 function buildJoiDate(tp: FieldDescription) {
     let val = Joi.date();
-    if (tp.dateString) {
+    if (tp[DescKey.DATE_STRING]) {
         if (tp.dateStringFormat) {
             val = val.format(tp.dateStringFormat);
         }
@@ -52,22 +52,22 @@ function buildJoiDate(tp: FieldDescription) {
  */
 function buildJoiNumber(tp: FieldDescription) {
     let val = Joi.number();
-    if (tp.minValue) {
-        val = val.min(tp.minValue.value);
-        if (tp.minValue.exclude) {
-            val = val.invalid(tp.minValue.value);
+    if (tp[DescKey.MIN_VALUE]) {
+        val = val.min(tp[DescKey.MIN_VALUE].value);
+        if (tp[DescKey.MIN_VALUE].exclude) {
+            val = val.invalid(tp[DescKey.MIN_VALUE].value);
         }
     }
-    if (tp.maxValue) {
-        val = val.max(tp.maxValue.value);
-        if (tp.maxValue.exclude) {
-            val = val.invalid(tp.maxValue.value);
+    if (tp[DescKey.MAX_VALUE]) {
+        val = val.max(tp[DescKey.MAX_VALUE].value);
+        if (tp[DescKey.MAX_VALUE].exclude) {
+            val = val.invalid(tp[DescKey.MAX_VALUE].value);
         }
     }
-    if (tp.positive) {
+    if (tp[DescKey.POSITIVE]) {
         val = val.positive();
     }
-    if (tp.negative) {
+    if (tp[DescKey.NEGATIVE]) {
         val = val.negative();
     }
     return val;
@@ -78,20 +78,20 @@ function buildJoiNumber(tp: FieldDescription) {
  * @param tp Field description metadata
  */
 function buildJoiArray(tp: FieldDescription) {
-    if (tp.nonempty) {
-        tp.minLength = Math.max(tp.minLength || 0, 1);
+    if (tp[DescKey.NON_EMPTY]) {
+        tp[DescKey.MIN_LENGTH] = Math.max(tp[DescKey.MIN_LENGTH] || 0, 1);
     }
     let val = Joi.array();
-    if (tp.typeInfo) {
-        val = val.items(buildJoiChildren({ designType: tp.typeInfo }));
+    if (tp[DescKey.TYPE_INFO]) {
+        val = val.items(buildJoiChildren({ designType: tp[DescKey.TYPE_INFO] }));
     }else{
         val = val.items(Joi.any())
     }
-    if (tp.minLength) {
-        val = val.min(tp.minLength);
+    if (tp[DescKey.MIN_LENGTH]) {
+        val = val.min(tp[DescKey.MIN_LENGTH]);
     }
-    if (tp.maxLength) {
-        val = val.max(tp.maxLength);
+    if (tp[DescKey.MAX_LENGTH]) {
+        val = val.max(tp[DescKey.MAX_LENGTH]);
     }
     return val;
 }
@@ -102,13 +102,13 @@ function buildJoiArray(tp: FieldDescription) {
  * @param tp   Field description metadata
  */
 function buildJoiGlobals(val: any, tp: FieldDescription) {
-    if (tp.nullable) {
+    if (tp[DescKey.NULLABLE]) {
         val = val.allow(null);
     }
     if (tp.options && tp.options.length > 0) {
         val = val.valid(...tp.options);
     }
-    if (tp.required) {
+    if (tp[DescKey.REQUIRED]) {
         val = val.required();
     } else {
         val = val.optional();
