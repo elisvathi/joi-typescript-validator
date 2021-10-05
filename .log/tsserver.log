@@ -1,0 +1,536 @@
+Info 0    [15:19:3.613] Starting TS Server
+Info 1    [15:19:3.613] Version: 3.6.3
+Info 2    [15:19:3.613] Arguments: /home/elis/.nvm/versions/node/v12.18.3/bin/node /home/elis/Projects/joi-typescript-validator/node_modules/.bin/tsserver --logFile /home/elis/Projects/joi-typescript-validator/.log/tsserver.log --logVerbosity info --cancellationPipeName /tmp/df09c00aba485b7ad33d7c7b4bcdda23/tscancellation*
+Info 3    [15:19:3.613] Platform: linux NodeVersion: 12 CaseSensitive: true
+Info 4    [15:19:3.628] Search path: /home/elis/Projects/joi-typescript-validator/src
+Info 5    [15:19:3.629] For info: /home/elis/Projects/joi-typescript-validator/src/test.ts :: Config file name: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 6    [15:19:3.629] Opened configuration file /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 7    [15:19:3.658] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 8    [15:19:5.468] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 1 structureChanged: true Elapsed: 1810ms
+Info 9    [15:19:5.468] Project '/home/elis/Projects/joi-typescript-validator/tsconfig.json' (Configured) 
+Info 10   [15:19:5.469] 	Files (40)
+
+Info 11   [15:19:5.469] -----------------------------------------------
+Info 12   [15:19:22.141] Search path: /home/elis/Projects/joi-typescript-validator/src/utils
+Info 13   [15:19:22.142] For info: /home/elis/Projects/joi-typescript-validator/src/utils/BuilderUtils.ts :: Config file name: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Err 14    [15:19:23.642] Exception on executing command {"command":"getCodeFixes","seq":46,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/utils/BuilderUtils.ts","startLine":2,"startOffset":1,"endLine":2,"endOffset":1,"errorCodes":[7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Err 15    [15:19:23.923] Exception on executing command {"command":"getCodeFixes","seq":49,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/utils/BuilderUtils.ts","startLine":2,"startOffset":1,"endLine":2,"endOffset":1,"errorCodes":[7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Info 16   [15:20:47.458] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/node_modules/joi-to-json-schema :: WatchInfo: /home/elis/Projects/joi-typescript-validator/node_modules 1 Project:  WatchType: node_modules for closed script infos in them
+Info 17   [15:20:47.459] Elapsed:: 1ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/node_modules/joi-to-json-schema :: WatchInfo: /home/elis/Projects/joi-typescript-validator/node_modules 1 Project:  WatchType: node_modules for closed script infos in them
+Info 18   [15:20:47.459] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/node_modules/joi-to-json-schema :: WatchInfo: /home/elis/Projects/joi-typescript-validator/node_modules 1 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 19   [15:20:47.466] Elapsed:: 7ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/node_modules/joi-to-json-schema :: WatchInfo: /home/elis/Projects/joi-typescript-validator/node_modules 1 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 20   [15:20:47.623] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json.905715350 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 21   [15:20:47.623] Elapsed:: 0ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json.905715350 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 22   [15:20:47.645] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json.905715350 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 23   [15:20:47.646] Elapsed:: 1ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json.905715350 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 24   [15:20:47.646] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 25   [15:20:47.649] Elapsed:: 3ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package.json :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 26   [15:20:47.699] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json.2422019921 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 27   [15:20:47.700] Elapsed:: 0ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json.2422019921 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 28   [15:20:47.710] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json.2422019921 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 29   [15:20:47.710] Elapsed:: 0ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json.2422019921 :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 30   [15:20:47.710] DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 31   [15:20:47.714] Elapsed:: 4ms DirectoryWatcher:: Triggered with /home/elis/Projects/joi-typescript-validator/package-lock.json :: WatchInfo: /home/elis/Projects/joi-typescript-validator 0 Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json WatchType: Failed Lookup Locations
+Info 32   [15:21:1.219] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 33   [15:21:1.264] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 2 structureChanged: false Elapsed: 45ms
+Info 34   [15:21:1.264] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 35   [15:21:1.265] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 36   [15:21:1.279] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 3 structureChanged: false Elapsed: 13ms
+Info 37   [15:21:1.279] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 38   [15:21:2.947] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 39   [15:21:2.956] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 4 structureChanged: false Elapsed: 9ms
+Info 40   [15:21:2.956] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 41   [15:21:3.572] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 42   [15:21:3.594] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 5 structureChanged: false Elapsed: 22ms
+Info 43   [15:21:3.594] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 44   [15:21:3.595] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 45   [15:21:3.609] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 6 structureChanged: false Elapsed: 14ms
+Info 46   [15:21:3.609] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 47   [15:21:3.887] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 48   [15:21:3.914] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 7 structureChanged: true Elapsed: 27ms
+Info 49   [15:21:3.914] Different program with same set of files:: oldProgram.structureIsReused:: 1
+Err 50    [15:21:4.252] Exception on executing command {"command":"getCodeFixes","seq":135,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":9,"endLine":3,"endOffset":9,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Err 51    [15:21:4.578] Exception on executing command {"command":"getCodeFixes","seq":137,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":10,"endLine":3,"endOffset":10,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Err 52    [15:21:4.877] Exception on executing command {"command":"getCodeFixes","seq":139,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":10,"endLine":3,"endOffset":10,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Err 53    [15:21:5.784] Exception on executing command {"command":"getCodeFixes","seq":143,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":21,"endLine":3,"endOffset":21,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Info 54   [15:21:6.746] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 55   [15:21:6.765] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 8 structureChanged: true Elapsed: 19ms
+Info 56   [15:21:6.765] Different program with same set of files:: oldProgram.structureIsReused:: 1
+Err 57    [15:21:6.767] Exception on executing command {"command":"getCodeFixes","seq":147,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":19,"endLine":3,"endOffset":19,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Info 58   [15:21:7.405] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 59   [15:21:7.423] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 9 structureChanged: false Elapsed: 17ms
+Info 60   [15:21:7.423] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 61   [15:21:8.476] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 62   [15:21:8.487] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 10 structureChanged: false Elapsed: 11ms
+Info 63   [15:21:8.487] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 64   [15:21:8.487] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 65   [15:21:8.495] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 11 structureChanged: false Elapsed: 8ms
+Info 66   [15:21:8.495] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 67   [15:21:8.840] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 68   [15:21:8.848] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 12 structureChanged: false Elapsed: 8ms
+Info 69   [15:21:8.848] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 70   [15:21:10.81] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 71   [15:21:10.111] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 13 structureChanged: true Elapsed: 30ms
+Info 72   [15:21:10.111] Different program with same set of files:: oldProgram.structureIsReused:: 1
+Err 73    [15:21:11.277] Exception on executing command {"command":"getCodeFixes","seq":181,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":42,"endLine":3,"endOffset":42,"errorCodes":[1005,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Info 74   [15:21:11.656] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 75   [15:21:11.669] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 14 structureChanged: false Elapsed: 13ms
+Info 76   [15:21:11.669] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Err 77    [15:21:11.899] Exception on executing command {"command":"getCodeFixes","seq":186,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":42,"endLine":3,"endOffset":42,"errorCodes":[6133,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Err 78    [15:21:12.279] Exception on executing command {"command":"getCodeFixes","seq":188,"type":"request","arguments":{"file":"/home/elis/Projects/joi-typescript-validator/src/test.ts","startLine":3,"startOffset":42,"endLine":3,"endOffset":42,"errorCodes":[6133,7016]}}:
+
+    Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+
+    Error: Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'isStringLiteral'.
+        at Object.cast (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:1457:25)
+        at tryGetImportedPackageName (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119513:33)
+        at Object.getCodeActions (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:119481:35)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:121
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:115852:23)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125866:35
+        at Object.flatMap (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:583:25)
+        at Object.getCodeFixesAtPosition (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:125864:23)
+        at IOSession.Session.getCodeFixes (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135063:64)
+        at Session.handlers.ts.createMapFromTemplate._a.<computed> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:133850:61)
+        at /home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:88
+        at IOSession.Session.executeWithRequestId (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135247:28)
+        at IOSession.Session.executeCommand (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135256:33)
+        at IOSession.Session.onMessage (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:135279:35)
+        at Interface.<anonymous> (/home/elis/Projects/joi-typescript-validator/node_modules/typescript/lib/tsserver.js:136594:27)
+        at Interface.emit (events.js:315:20)
+        at Interface._onLine (readline.js:329:10)
+        at Interface._normalWrite (readline.js:474:12)
+        at Socket.ondata (readline.js:186:10)
+        at Socket.emit (events.js:315:20)
+        at addChunk (_stream_readable.js:295:12)
+        at readableAddChunk (_stream_readable.js:271:9)
+        at Socket.Readable.push (_stream_readable.js:212:10)
+        at Pipe.onStreamRead (internal/stream_base_commons.js:186:23)
+Info 79   [15:21:28.280] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 80   [15:21:28.293] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 15 structureChanged: false Elapsed: 13ms
+Info 81   [15:21:28.293] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 82   [15:21:28.321] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 83   [15:21:28.330] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 16 structureChanged: false Elapsed: 9ms
+Info 84   [15:21:28.330] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 85   [15:21:29.753] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 86   [15:21:29.769] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 17 structureChanged: false Elapsed: 15ms
+Info 87   [15:21:29.769] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 88   [15:21:29.850] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 89   [15:21:29.867] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 18 structureChanged: false Elapsed: 17ms
+Info 90   [15:21:29.868] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 91   [15:21:30.580] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 92   [15:21:30.589] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 19 structureChanged: false Elapsed: 9ms
+Info 93   [15:21:30.589] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 94   [15:21:30.610] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 95   [15:21:30.615] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 20 structureChanged: false Elapsed: 5ms
+Info 96   [15:21:30.615] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 97   [15:21:30.920] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 98   [15:21:30.929] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 21 structureChanged: false Elapsed: 9ms
+Info 99   [15:21:30.929] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 100  [15:21:30.948] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 101  [15:21:30.960] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 22 structureChanged: false Elapsed: 12ms
+Info 102  [15:21:30.960] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 103  [15:21:31.390] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 104  [15:21:31.404] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 23 structureChanged: false Elapsed: 14ms
+Info 105  [15:21:31.404] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 106  [15:21:31.698] getCompletionData: Get current token: 0
+Info 107  [15:21:31.699] getCompletionData: Is inside comment: 0
+Info 108  [15:21:31.699] getCompletionData: Get previous token 1: 0
+Info 109  [15:21:31.699] getCompletionData: Get previous token 2: 0
+Info 110  [15:21:31.701] getCompletionsAtPosition: isCompletionListBlocker: 1
+Info 111  [15:21:31.713] getCompletionData: Semantic work: 12
+Info 112  [15:21:31.726] getCompletionsAtPosition: getCompletionEntriesFromSymbols: 12
+Info 113  [15:21:32.371] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 114  [15:21:32.382] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 24 structureChanged: false Elapsed: 11ms
+Info 115  [15:21:32.382] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 116  [15:21:32.784] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 117  [15:21:32.797] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 25 structureChanged: false Elapsed: 12ms
+Info 118  [15:21:32.797] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 119  [15:21:33.685] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 120  [15:21:33.692] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 26 structureChanged: false Elapsed: 6ms
+Info 121  [15:21:33.692] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 122  [15:21:33.692] getCompletionData: Get current token: 0
+Info 123  [15:21:33.692] getCompletionData: Is inside comment: 0
+Info 124  [15:21:33.692] getCompletionData: Get previous token 1: 0
+Info 125  [15:21:33.692] getCompletionData: Get previous token 2: 0
+Info 126  [15:21:33.693] getCompletionsAtPosition: isCompletionListBlocker: 0
+Info 127  [15:21:33.698] getCompletionData: Semantic work: 5
+Info 128  [15:21:33.929] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 129  [15:21:33.946] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 27 structureChanged: true Elapsed: 17ms
+Info 130  [15:21:33.946] Different program with same set of files:: oldProgram.structureIsReused:: 1
+Info 131  [15:21:33.998] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 132  [15:21:34.6] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 28 structureChanged: false Elapsed: 8ms
+Info 133  [15:21:34.6] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 134  [15:21:36.400] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 135  [15:21:36.410] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 29 structureChanged: false Elapsed: 10ms
+Info 136  [15:21:36.410] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 137  [15:21:36.703] getCompletionData: Get current token: 0
+Info 138  [15:21:36.703] getCompletionData: Is inside comment: 0
+Info 139  [15:21:36.704] getCompletionData: Get previous token 1: 1
+Info 140  [15:21:36.704] getCompletionData: Get previous token 2: 0
+Info 141  [15:21:36.704] getCompletionsAtPosition: isCompletionListBlocker: 0
+Info 142  [15:21:36.723] getCompletionData: Semantic work: 19
+Info 143  [15:21:36.736] getCompletionsAtPosition: getCompletionEntriesFromSymbols: 11
+Info 144  [15:21:37.425] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 145  [15:21:37.443] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 30 structureChanged: false Elapsed: 18ms
+Info 146  [15:21:37.443] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 147  [15:21:37.443] getCompletionData: Get current token: 0
+Info 148  [15:21:37.443] getCompletionData: Is inside comment: 0
+Info 149  [15:21:37.444] getCompletionData: Get previous token 1: 0
+Info 150  [15:21:37.444] getCompletionData: Get previous token 2: 0
+Info 151  [15:21:37.444] getCompletionsAtPosition: isCompletionListBlocker: 0
+Info 152  [15:21:37.461] getCompletionData: Semantic work: 17
+Info 153  [15:21:38.95] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 154  [15:21:38.111] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 31 structureChanged: false Elapsed: 16ms
+Info 155  [15:21:38.111] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 156  [15:21:39.428] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 157  [15:21:39.445] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 32 structureChanged: false Elapsed: 17ms
+Info 158  [15:21:39.445] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 159  [15:21:41.681] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 160  [15:21:41.691] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 33 structureChanged: false Elapsed: 10ms
+Info 161  [15:21:41.691] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 162  [15:21:43.297] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 163  [15:21:43.309] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 34 structureChanged: false Elapsed: 12ms
+Info 164  [15:21:43.309] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 165  [15:21:43.571] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 166  [15:21:43.577] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 35 structureChanged: false Elapsed: 5ms
+Info 167  [15:21:43.577] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 168  [15:21:44.375] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 169  [15:21:44.387] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 36 structureChanged: false Elapsed: 12ms
+Info 170  [15:21:44.387] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 171  [15:21:44.905] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 172  [15:21:44.913] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 37 structureChanged: false Elapsed: 8ms
+Info 173  [15:21:44.913] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 174  [15:21:45.441] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 175  [15:21:45.453] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 38 structureChanged: false Elapsed: 12ms
+Info 176  [15:21:45.453] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 177  [15:21:47.488] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 178  [15:21:47.496] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 39 structureChanged: false Elapsed: 8ms
+Info 179  [15:21:47.497] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 180  [15:21:47.555] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 181  [15:21:47.578] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 40 structureChanged: false Elapsed: 23ms
+Info 182  [15:21:47.578] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 183  [15:21:51.991] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 184  [15:21:52.0] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 41 structureChanged: false Elapsed: 9ms
+Info 185  [15:21:52.0] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 186  [15:21:52.496] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 187  [15:21:52.502] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 42 structureChanged: false Elapsed: 6ms
+Info 188  [15:21:52.502] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 189  [15:21:55.260] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 190  [15:21:55.272] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 43 structureChanged: false Elapsed: 12ms
+Info 191  [15:21:55.272] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 192  [15:22:5.405] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 193  [15:22:5.419] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 44 structureChanged: false Elapsed: 14ms
+Info 194  [15:22:5.419] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 195  [15:22:5.745] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 196  [15:22:5.760] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 45 structureChanged: false Elapsed: 15ms
+Info 197  [15:22:5.760] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 198  [15:22:6.221] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 199  [15:22:6.236] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 46 structureChanged: false Elapsed: 15ms
+Info 200  [15:22:6.236] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 201  [15:22:6.301] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 202  [15:22:6.309] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 47 structureChanged: false Elapsed: 7ms
+Info 203  [15:22:6.309] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 204  [15:22:7.722] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 205  [15:22:7.728] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 48 structureChanged: false Elapsed: 6ms
+Info 206  [15:22:7.728] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 207  [15:22:8.356] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 208  [15:22:8.366] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 49 structureChanged: false Elapsed: 10ms
+Info 209  [15:22:8.366] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 210  [15:22:9.664] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 211  [15:22:9.670] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 50 structureChanged: false Elapsed: 6ms
+Info 212  [15:22:9.670] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 213  [15:22:10.132] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 214  [15:22:10.142] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 51 structureChanged: false Elapsed: 10ms
+Info 215  [15:22:10.143] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 216  [15:23:47.202] Format host information updated
+Info 217  [15:23:47.432] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 218  [15:23:47.454] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 52 structureChanged: false Elapsed: 22ms
+Info 219  [15:23:47.454] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 220  [15:27:12.88] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 221  [15:27:12.98] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 53 structureChanged: false Elapsed: 8ms
+Info 222  [15:27:12.98] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 223  [15:27:12.887] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 224  [15:27:12.896] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 54 structureChanged: false Elapsed: 9ms
+Info 225  [15:27:12.896] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 226  [15:27:13.535] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 227  [15:27:13.547] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 55 structureChanged: false Elapsed: 12ms
+Info 228  [15:27:13.547] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 229  [15:27:16.885] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 230  [15:27:16.892] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 56 structureChanged: false Elapsed: 7ms
+Info 231  [15:27:16.892] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 232  [15:27:18.888] Format host information updated
+Info 233  [15:27:22.209] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 234  [15:27:22.217] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 57 structureChanged: false Elapsed: 8ms
+Info 235  [15:27:22.217] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 236  [15:27:23.767] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 237  [15:27:23.774] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 58 structureChanged: false Elapsed: 7ms
+Info 238  [15:27:23.775] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 239  [15:27:24.494] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 240  [15:27:24.508] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 59 structureChanged: false Elapsed: 13ms
+Info 241  [15:27:24.508] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 242  [15:27:25.410] Starting updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json
+Info 243  [15:27:25.428] Finishing updateGraphWorker: Project: /home/elis/Projects/joi-typescript-validator/tsconfig.json Version: 60 structureChanged: false Elapsed: 18ms
+Info 244  [15:27:25.428] Different program with same set of files:: oldProgram.structureIsReused:: 2
