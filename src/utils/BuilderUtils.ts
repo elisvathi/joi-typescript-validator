@@ -225,7 +225,7 @@ function buildJoiChildren(tp: FieldDescription) {
  * @param tp type to validate
  */
 function buildJoiRoot(tp: any): BaseJoi.Schema {
-  const metadata = getMetadata(tp) || Joi.any();
+  const metadata = getMetadata(tp) || {};
   const payload = Object.keys(metadata).reduce((acc, item) => {
     acc[item] = buildJoiChildren(metadata[item]);
     return acc;
