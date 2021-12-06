@@ -286,11 +286,6 @@ export function getSchemaDescription(
  * @param obj Any object
  * @param save
  */
-export function Validate<T>(
-  ctor: new () => T,
-  obj: object,
-  save = true
-) {
-  const schema: BaseJoi.Schema = getSchema(ctor, save);
-  return schema.validate(obj);
+export function Validate<T>(ctor: new () => T, obj: object, save = true) {
+  return getSchema(ctor, save).validate(obj);
 }
