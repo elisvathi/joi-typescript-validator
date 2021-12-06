@@ -260,7 +260,7 @@ function buildJoiRoot(tp: any): BaseJoi.Schema {
  * @param tp type to validate
  * @param save
  */
-export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
+export function getSchema(tp: any, save = true): BaseJoi.Schema {
   if (savedSchemas.has(tp)) {
     return savedSchemas.get(tp);
   }
@@ -276,7 +276,7 @@ export function getSchema(tp: any, save: boolean = true): BaseJoi.Schema {
 
 export function getSchemaDescription(
   tp: any,
-  save: boolean = true
+  save = true
 ): BaseJoi.Description {
   return getSchema(tp, save).describe();
 }
@@ -289,7 +289,7 @@ export function getSchemaDescription(
 export function Validate<T>(
   ctor: new () => T,
   obj: object,
-  save: boolean = true
+  save = true
 ) {
   const schema: BaseJoi.Schema = getSchema(ctor, save);
   return schema.validate(obj);

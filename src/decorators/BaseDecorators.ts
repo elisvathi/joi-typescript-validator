@@ -84,7 +84,7 @@ export function Required() {
 /**
  * Allows the field to have null value
  */
-export function Nullable(enable: boolean = true) {
+export function Nullable(enable = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { nullable: enable };
         setFieldDescription(target, propertyKey, description);
@@ -162,7 +162,7 @@ export function Min(value: Threshold | number) {
  * Positive number only
  * @param enable Optional , use if you need to disable in derived classes
  */
-export function Positive(enable: boolean = true) {
+export function Positive(enable = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { positive: enable };
         setFieldDescription(target, propertyKey, description);
@@ -173,7 +173,7 @@ export function Positive(enable: boolean = true) {
  * Negative number only
  * @param enable Optional, use if you need to disable in derived classes
  */
-export function Negative(enable: boolean = true) {
+export function Negative(enable = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { negative: enable };
         setFieldDescription(target, propertyKey, description);
@@ -184,7 +184,7 @@ export function Negative(enable: boolean = true) {
  * Non empty array or string
  * @param enable Optional, use if you need to disable in derived classes
  */
-export function NotEmpty(enable: boolean = true) {
+export function NotEmpty(enable = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { nonempty: enable };
         setFieldDescription(target, propertyKey, description);
@@ -217,14 +217,14 @@ export function ValidOptions(...args: any[]) {
  * Non empty arrays or strings
  * @param enable Optional, use if you need to disable in derived classes
  */
-export function Email(enable: boolean = true) {
+export function Email(enable = true) {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { email: enable };
         setFieldDescription(target, propertyKey, description);
     };
 }
 
-export function DateString(format: string = "YYYY-MM-DD") {
+export function DateString(format = "YYYY-MM-DD") {
     return function(target: any, propertyKey: string) {
         const description: FieldDescription = { dateString: true, dateStringFormat: format };
         setFieldDescription(target, propertyKey, description);
