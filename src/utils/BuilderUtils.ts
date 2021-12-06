@@ -286,7 +286,7 @@ export function getSchemaDescription(
  * @param obj Any object
  * @param save
  */
-export async function Validate<T>(
+export function Validate<T>(
   ctor: new () => T,
   obj: object,
   save: boolean = true
