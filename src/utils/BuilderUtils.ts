@@ -3,6 +3,7 @@ import JoiDateFactory from "@joi/date";
 import { SchemaFunction } from "..";
 import { getMetadata, getOptions, getGlobalArgs } from "./MetadataHelpers";
 import { FieldDescription } from "../decorators/FieldDescription";
+import { Class } from "../types";
 
 const Joi = BaseJoi.extend(JoiDateFactory);
 /**
@@ -256,36 +257,41 @@ function buildJoiRoot(tp: any): BaseJoi.Schema {
 }
 
 /**
- * Returns the schema for the root type
- * @param tp type to validate
- * @param save
+ * Returns the schema for the Class
+ * @template T
+ * @param {Class<T>} klass Class for which to get or build the schema
+ * @param {boolean}  save  Boolean flag to choose whether or not to save the schema
+ * @returns {BaseJoi.Schema} Joi Schema
  */
-export function getSchema(tp: any, save = true): BaseJoi.Schema {
-  if (savedSchemas.has(tp)) {
-    return savedSchemas.get(tp);
-  }
-
-  const result = buildJoiRoot(tp);
+export function getSchema<T>(klass: Class<T>, save = true) {
+  const schema = savedSchemas.get(klass) || buildJoiRoot(klass);
 
   if (save) {
-    savedSchemas.set(tp, result);
+    savedSchemas.set(klass, schema);
   }
 
-  return result;
-}
-
-export function getSchemaDescription(
-  tp: any,
-  save = true
-): BaseJoi.Description {
-  return getSchema(tp, save).describe();
+  return schema;
 }
 
 /**
- * Validates the object, returns the object if success, or throws a Joi Validation Error
- * @param obj Any object
- * @param save
+ * Returns a plain object representing the schema's rules and properties for the given class
+ * @template T
+ * @param {Class<T>} klass Class for which to get the schema's rules and properties
+ * @param {boolean}  save  Boolean flag to choose whether or not to save the schema
+ * @returns {BaseJoi.Description} Joi schema's rules and properties
  */
-export function Validate<T>(ctor: new () => T, obj: object, save = true) {
-  return getSchema(ctor, save).validate(obj);
+export function getSchemaDescription<T>(klass: Class<T>, save = true) {
+  return getSchema(klass, save).describe();
+}
+
+/**
+ * Validates the object and returns Joi ValidationResult
+ * @template T
+ * @param {Class<T>} klass Class of object
+ * @param {object}   obj   Object
+ * @param {boolean}  save  Boolean flag to choose whether or not to save the schema
+ * @returns {BaseJoi.ValidationResult} Joi ValidationResult
+ */
+export function Validate<T>(klass: Class<T>, obj: object, save = true) {
+  return getSchema(klass, save).validate(obj);
 }
