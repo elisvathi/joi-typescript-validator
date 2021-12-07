@@ -2,14 +2,15 @@ import { ValidationOptions } from "joi";
 import "reflect-metadata";
 import { MetadataKeys } from "..";
 import { SchemaArgs, TreeMetadata } from "../decorators/BaseDecorators";
+import { Class } from "../types";
 
 /**
- * Print class saved metadata
- * @param obj Class
+ * Print class metadata to console
+ * @template T
+ * @param {Class<T>} klass Class for which to print metadata
  */
-export function printMetadata(obj: any) {
-  const metadata = getMetadata(obj);
-  console.dir(metadata, { depth: null });
+export function printMetadata<T>(klass: Class<T>) {
+  console.dir(getMetadata(klass), { depth: null });
 }
 
 /**
