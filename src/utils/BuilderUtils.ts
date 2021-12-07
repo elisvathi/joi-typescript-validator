@@ -6,14 +6,18 @@ import { FieldDescription } from "../decorators/FieldDescription";
 import { Class } from "../types";
 
 const Joi = BaseJoi.extend(JoiDateFactory);
+
+/**
+ * Map of saved schemas for faster access internally.
+ * Prevents regenerating schemas that have already been generated
+ * @type {Map<Class<unknown>, BaseJoi.Schema>}
+ */
+const savedSchemas = new Map<Class<unknown>, BaseJoi.Schema>();
+
 /**
  * Builds the schema for the string field
  * @param tp Field description metadata
  */
-
-// const savedSchemas: { [key: string]: BaseJoi.Schema } = {};
-const savedSchemas: Map<any, BaseJoi.Schema> = new Map<any, BaseJoi.Schema>();
-
 function buildJoiString(tp: FieldDescription) {
   if (tp.nonempty) {
     tp.minLength = Math.max(tp.minLength || 0, 1);
