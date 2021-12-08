@@ -16,9 +16,18 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "rules": {
+    "no-unused-vars": [
+      "warn",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
     "quotes": [
       "error",
       "double"
-    ]
+    ],
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
