@@ -35,40 +35,62 @@ export class ClassDescription {
 export type TreeMetadata = Map<any, ClassDescription>;
 
 /**
- *  Attaches the default metadata such es design:type to the field descriptions,
- *  keeps the existing metadata if any,
- *  and adds the new metadata to that field
- * @param target  Target class
- * @param propertyKey Field name
- * @param description Partial field metadata object
+ * Attach field design type and description to class prototype metadata
+ * @template T
+ * @param {T}                target      Class prototype to attach field design type and description to
+ * @param {string}           propertyKey Field key to identify the field, for which, to set the description and design type
+ * @param {FieldDescription} description Field description metadata to attach to class prototype
  */
-function setFieldDescription(target: any, propertyKey: string, description: FieldDescription) {
-    const DesignType = Reflect.getMetadata("design:type", target, propertyKey);
-    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target);
-    existingInstance = existingInstance || new Map();
-    existingInstance.set(target.constructor, existingInstance.get(target.constructor) || {});
-    const existingFields: any = existingInstance.get(target.constructor).fields || {};
-    existingFields[propertyKey] = existingFields[propertyKey] || {};
-    existingFields[propertyKey].designType = DesignType;
-    existingFields[propertyKey] = { ...existingFields[propertyKey], ...description };
-    existingInstance.get(target.constructor).fields = existingFields;
-    Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
+function setFieldDescription<T>(target: T, propertyKey: string, description: FieldDescription) {
+  const designType = Reflect.getMetadata("design:type", target, propertyKey) as object;
+  const metadata = (Reflect.getMetadata(MetadataKeys.Fields, target) || new Map()) as TreeMetadata;
+
+  metadata.set(target.constructor, metadata.get(target.constructor) || {});
+  const fields = metadata.get(target.constructor).fields || {};
+  fields[propertyKey] = fields[propertyKey] || {};
+  fields[propertyKey] = { ...fields[propertyKey], designType, ...description };
+  metadata.get(target.constructor).fields = fields;
+
+  Reflect.defineMetadata(MetadataKeys.Fields, metadata, target);
 }
 
-function setSchemaGlobals(target: any, fun: SchemaArgs) {
-    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target.prototype);
-    existingInstance = existingInstance || new Map();
-    existingInstance.set(target, existingInstance.get(target) || {});
-    existingInstance.get(target).globalArgs = fun;
-    Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
+/**
+ * Attach Joi schema or schema function to class metadata as globalArgs
+ * @template T
+ * @param {Class<T>}   klass Class to attach globalArgs to
+ * @param {SchemaArgs} args  Joi schema or schema function to attach to class
+ */
+function setSchemaGlobals<T>(klass: Class<T>, args: SchemaArgs) {
+  const metadata = getFieldsMetadata(klass.prototype);
+  metadata.set(klass, metadata.get(klass) || {});
+  metadata.get(klass).globalArgs = args;
+
+  Reflect.defineMetadata(MetadataKeys.Fields, metadata, klass);
 }
 
-function setSchemaOptions(target: any, options: ValidationOptions){
-    let existingInstance: TreeMetadata = Reflect.getMetadata(MetadataKeys.Fields, target.prototype);
-    existingInstance = existingInstance || new Map();
-    existingInstance.set(target, existingInstance.get(target) || {});
-    existingInstance.get(target).options = options;
-    Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
+/**
+ * Attach Joi validation options to class metadata as options
+ * @template T
+ * @param {Class<T>}          klass   Class to attach validations options to
+ * @param {ValidationOptions} options Validations options to attach to class
+ */
+function setSchemaOptions<T>(klass: Class<T>, options: ValidationOptions) {
+  const metadata = getFieldsMetadata(klass.prototype);
+  metadata.set(klass, metadata.get(klass) || {});
+  metadata.get(klass).options = options;
+
+  Reflect.defineMetadata(MetadataKeys.Fields, metadata, klass);
+}
+
+/**
+ * Get fields metadata Map for class prototype
+ * @template T
+ * @param {T} target Class prototype
+ * @returns {TreeMetadata} Existing fields metadata or a new empty Map
+ */
+function getFieldsMetadata<T>(target: T) {
+  const reflectMetadata = Reflect.getMetadata(MetadataKeys.Fields, target) as TreeMetadata;
+  return reflectMetadata || new Map() as TreeMetadata;
 }
 
 /**
