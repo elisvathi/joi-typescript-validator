@@ -43,7 +43,7 @@ export type TreeMetadata = Map<any, ClassDescription>;
  */
 function setFieldDescription<T>(target: T, propertyKey: string, description: FieldDescription) {
   const designType = Reflect.getMetadata("design:type", target, propertyKey) as object;
-  const metadata = (Reflect.getMetadata(MetadataKeys.Fields, target) || new Map()) as TreeMetadata;
+  const metadata = getFieldsMetadata(target);
 
   metadata.set(target.constructor, metadata.get(target.constructor) || {});
   const fields = metadata.get(target.constructor).fields || {};
