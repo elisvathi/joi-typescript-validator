@@ -195,69 +195,65 @@ function buildJoiObject(tp: FieldDescription) {
 }
 
 /**
- * Checks the type of the field and returns the child schema accordingly
- * @param tp field description object
+ * Build field schema depending on type
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.Schema}
  */
-function buildJoiChildren(tp: FieldDescription) {
-  let val;
-  switch (tp.designType?.name) {
-    case "String":
-      val = buildJoiString(tp);
-      break;
-    case "Boolean":
-      val = Joi.boolean();
-      break;
-    case "Number":
-      val = buildJoiNumber(tp);
-      break;
-    case "Array":
-      val = buildJoiArray(tp);
-      break;
-    case "Date":
-      val = buildJoiDate(tp);
-      break;
-    default:
-      val = buildJoiObject(tp);
-      break;
-  }
+function buildFieldSchema(description: FieldDescription) {
+  const designType = description.dateString ? "Date" : description.designType?.name as string;
 
-  val = buildJoiGlobals(val, tp);
-  return val;
+  switch (designType) {
+    case "Array":
+      return buildJoiArray(description);
+    case "Date":
+      return buildJoiDate(description);
+    case "Boolean":
+      return Joi.boolean();
+    case "Number":
+      return buildJoiNumber(description);
+    case "String":
+      return buildJoiString(description);
+    default:
+      return buildJoiObject(description);
+  }
 }
 
 /**
- * Returns the schema for the root type
- * @param tp type to validate
+ * Build field schema with global conditions
+ * @param {FieldDescription} description Field description object
  */
-function buildJoiRoot(tp: any): BaseJoi.Schema {
-  const metadata = getMetadata(tp) || {};
-  const payload = Object.keys(metadata).reduce((acc, item) => {
-    acc[item] = buildJoiChildren(metadata[item]);
-    return acc;
-  }, {});
+function buildJoiChildren(description: FieldDescription) {
+  return buildJoiGlobals(buildFieldSchema(description), description);
+}
 
-  let result = Joi.object().keys(payload);
+/**
+ * Build Joi schema for given class
+ * @template T
+ * @param {Class<T>} klass Class, for which, to generate the Joi schema
+ * @returns {BaseJoi.ObjectSchema}
+ */
+function buildJoiRoot<T>(klass: Class<T>) {
+  const metadata = getMetadata(klass) || {};
+  const partialSchema = Object.keys(metadata).reduce((acc, item) => ({
+    ...acc,
+    [item]: buildJoiChildren(metadata[item]),
+  }), {});
 
-  const options = getOptions(tp);
-  if (options) {
-    result = result.options(options);
-  }
+  const options = getOptions(klass);
+  const globals = getGlobalArgs(klass) as BaseJoi.Schema | BaseJoi.SchemaFunction;
 
-  const globals = getGlobalArgs(tp);
+  const objectSchema = BaseJoi.object().keys(partialSchema);
+  const schema = options ? objectSchema.options(options) : objectSchema;
+
   if (globals) {
-    const name = globals.constructor.name;
-
-    if (!!name && name === "Function") {
-      if (!result) {
-        result = BaseJoi.any().empty();
-      }
-      result = (globals as SchemaFunction)(result);
-    } else {
-      result = globals;
+    if (typeof globals === "function") {
+      return globals(schema || Joi.any().empty());
     }
+
+    return globals;
   }
 
-  return result;
+  return schema;
 }
 
 /**
