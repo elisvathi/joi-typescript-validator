@@ -5,7 +5,10 @@ import { getMetadata, getOptions, getGlobalArgs } from "./MetadataHelpers";
 import { FieldDescription } from "../decorators/FieldDescription";
 import { Class } from "../types";
 
-const Joi = BaseJoi.extend(JoiDateFactory);
+/**
+ * Joi instance customized with JoiDateFactory extension
+ */
+const Joi = BaseJoi.extend(JoiDateFactory) as BaseJoi.Root;
 
 /**
  * Map of saved schemas for faster access internally.
@@ -24,14 +27,6 @@ function buildJoiString(tp: FieldDescription) {
   }
 
   let val = Joi.string();
-
-  if (tp.dateString) {
-    val = Joi.date();
-
-    if (tp.dateStringFormat) {
-      val = val.format(tp.dateStringFormat);
-    }
-  }
 
   if (tp.minLength) {
     val = val.min(tp.minLength);
