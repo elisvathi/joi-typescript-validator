@@ -116,53 +116,46 @@ function buildJoiArray(tp: FieldDescription) {
 }
 
 /**
- * Builds the existing schema with global conditions for all types
- * @param val existing JOI schema
- * @param tp   Field description metadata
+ * Extend field Joi schema with global conditions
+ * @param {BaseJoi.Schema}   fieldSchema Field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.Schema}
  */
-function buildJoiGlobals(val: any, tp: FieldDescription) {
-  if (tp.nullable) {
-    val = val.allow(null);
+function buildJoiGlobals(fieldSchema: BaseJoi.Schema, description: FieldDescription) {
+  let schema = fieldSchema;
+
+  if (description.nullable) {
+    schema = schema.allow(null);
   }
 
-  if (tp.options && tp.options.length > 0) {
-    val = val.valid(...tp.options);
+  if (description.options) {
+    schema = schema.valid(...description.options);
   }
 
-  if (tp.required) {
-    val = val.required();
+  if (description.required) {
+    schema = schema.required();
   } else {
-    val = val.optional();
+    schema = schema.optional();
   }
 
-  if (tp.customSchema) {
-    const name = tp.customSchema.constructor.name;
-    if (!!name && name === "Function") {
-      if (!val) {
-        val = BaseJoi.any().empty();
-      }
-
-      val = (tp.customSchema as SchemaFunction)(val);
+  if (description.customSchema) {
+    if (typeof description.customSchema === "function") {
+      schema = description.customSchema(schema || Joi.any().empty()) as BaseJoi.Schema;
     } else {
-      val = tp.customSchema;
+      schema = description.customSchema;
     }
   }
 
-  const globals = getGlobalArgs(tp.designType);
+  const globals = getGlobalArgs(description.designType);
   if (globals) {
-    const name = globals.constructor.name;
-    if (!!name && name === "Function") {
-      if (!val) {
-        val = BaseJoi.any().empty();
-      }
-
-      val = (tp.customSchema as SchemaFunction)(val);
+    if (typeof globals === "function") {
+      schema = globals(schema || Joi.any().empty()) as BaseJoi.Schema;
     } else {
-      val = globals;
+      schema = globals;
     }
   }
 
-  return val;
+  return schema;
 }
 
 /**
