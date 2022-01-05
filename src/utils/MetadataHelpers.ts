@@ -76,20 +76,27 @@ export function getMetadata(obj: any) {
   return getMetadataFromObject(obj, retVal);
 }
 
-export function getOptions(obj: any): ValidationOptions {
-  const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
-  if (!retVal) {
+/**
+ * Get ValidationOptions passed to class with `@SchemaOptions` decorator
+ * @template T
+ * @param {Class<T>} klass Class for which to get the schema options passed by decorator
+ * @returns {ValidationOptions} Joi ValidationOptions
+ */
+export function getOptions<T>(klass: Class<T>): ValidationOptions {
+  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
+  if (metadata === undefined) {
     return;
   }
-  if (!obj.name) {
-    return;
+
+  const classDescription = metadata.get(klass);
+  if (classDescription === undefined) {
+    const parentClass = Object.getPrototypeOf(klass) as Class<unknown>;
+    if (parentClass.name !== "") {
+      return getOptions(parentClass);
+    }
   }
-  let selected = retVal.get(obj);
-  if (!selected) {
-    const result = getOptions(Object.getPrototypeOf(obj));
-    return result;
-  }
-  return selected.options;
+
+  return classDescription.options;
 }
 
 export function getGlobalArgs(obj: any): SchemaArgs {
