@@ -1,6 +1,5 @@
 import BaseJoi from "joi";
 import JoiDateFactory from "@joi/date";
-import { SchemaFunction } from "..";
 import { getMetadata, getOptions, getGlobalArgs } from "./MetadataHelpers";
 import { FieldDescription } from "../decorators/FieldDescription";
 import { Class } from "../types";
@@ -188,7 +187,7 @@ function buildJoiObject(tp: FieldDescription) {
  * @returns {BaseJoi.Schema}
  */
 function buildFieldSchema(description: FieldDescription) {
-  const designType = description.dateString ? "Date" : description.designType?.name as string;
+  const designType = description.dateString ? "Date" : description.designType?.name;
 
   switch (designType) {
     case "Array":
