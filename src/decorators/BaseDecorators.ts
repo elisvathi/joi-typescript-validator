@@ -13,14 +13,18 @@ export const MetadataKeys = {
 };
 
 /**
- *  Threshold used for min and max constraints for numbers,
- *  if exclude specified,
- *  adjusts if the threshold value is inclusive or exclusive
+ * Threshold interface, describing a maximum or minimum (exclusive or inclusive) limit
  */
-
 export interface Threshold {
-    value: number;
-    exclude?: boolean;
+  /**
+   * Limit value
+   */
+  value: number;
+
+  /**
+   * Mark to set limit as exclusive
+   */
+  exclude?: boolean;
 }
 
 /**
