@@ -48,13 +48,30 @@ export interface ConditionSchema {
   falsy: Joi.Schema;
 }
 
-
+/**
+ * Class description metadata
+ */
 export class ClassDescription {
-    public fields?: { [key: string]: FieldDescription };
-    public globalArgs?: SchemaArgs;
-    public options?: ValidationOptions;
+  /**
+   * Class fields object containing each field's FieldDescription
+   */
+  public fields?: { [key: string]: FieldDescription };
+
+  /**
+   * Class options attached with `@SchemaOptions` decorator
+   */
+  public options?: ValidationOptions;
+
+  /**
+   * Class globalArgs attached with `@CustomSchema` decorator
+   */
+  public globalArgs?: SchemaArgs;
 }
-export type TreeMetadata = Map<any, ClassDescription>;
+
+/**
+ * Class tree metadata
+ */
+export type TreeMetadata = Map<unknown, ClassDescription>;
 
 /**
  * Attach field design type and description to class prototype metadata
