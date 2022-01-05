@@ -23,11 +23,26 @@ export interface Threshold {
     exclude?: boolean;
 }
 
+/**
+ * ConditionSchema interface, describing Joi schema based on condition value
+ */
 export interface ConditionSchema {
-    condition: (args: any) => boolean;
-    truthy: Joi.Schema;
-    falsy: Joi.Schema;
+  /**
+   * Condition function to return boolean value
+   */
+  condition: (_args: unknown[]) => boolean;
+
+  /**
+   * Joi schema when condition evaluates to true
+   */
+  truthy: Joi.Schema;
+
+  /**
+   * Joi schema when condition evaluates to false
+   */
+  falsy: Joi.Schema;
 }
+
 
 export class ClassDescription {
     public fields?: { [key: string]: FieldDescription };
