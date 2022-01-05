@@ -1,63 +1,92 @@
+import { Class } from "../types";
 import { ConditionSchema, SchemaArgs, Threshold } from "./BaseDecorators";
+
 /**
- *  Metadata used for all annotated fields
+ * Metadata of annotated field
  */
 export interface FieldDescription {
-    conditional?: ConditionSchema;
-    customSchema?: SchemaArgs;
-    /**
-     * Design type of the field
-     */
-    designType?: any;
-    /**
-     * Required flag
-     */
-    required?: boolean;
-    /**
-     * Constraint field content on the instance to one of these values if specified
-     */
-    options?: any[];
-    /**
-     *  The field can contain null value
-     */
-    nullable?: boolean;
-    /**
-     *  Type specified if the field is an array
-     */
-    typeInfo?: any;
-    /**
-     *  Flag if the string field should be an email
-     */
-    email?: boolean;
-    /**
-     *  Max value for number fields
-     */
-    maxValue?: Threshold;
-    /**
-     *  Min Value for number fields
-     */
-    minValue?: Threshold;
-    /**
-     *  Specifies if number should be positive
-     */
-    positive?: boolean;
-    /**
-     *  Specifies if number should be negative
-     */
-    negative?: boolean;
-    /**
-     *  Specifies if string or array field should be non-empty,
-     *  changes the minLength value to the max of 1 and existing minlength
-     */
-    nonempty?: boolean;
-    /**
-     *  Min length for array and string values
-     */
-    minLength?: number;
-    /**
-     *  Max length for array and string values
-     */
-    maxLength?: number;
-    dateString?: boolean;
-    dateStringFormat?: string;
+  /**
+   * Design type of the field
+   */
+  designType?: Class<unknown>;
+
+  /**
+   * Type of array field values
+   */
+  typeInfo?: Class<unknown>;
+
+  /**
+   * Conditional constraint
+   */
+  conditional?: ConditionSchema;
+
+  /**
+   * Custom Joi Schema
+   */
+  customSchema?: SchemaArgs;
+
+  /**
+   * Nullable constraint
+   */
+  nullable?: boolean;
+
+  /**
+   * Required constraint
+   */
+  required?: boolean;
+
+  /**
+   * Allowed values constraint
+   */
+  options?: unknown[];
+
+  /**
+   * Value greater than 0 constraint for number fields
+   */
+  positive?: boolean;
+
+  /**
+   * Value less than 0 constraint for number fields
+   */
+  negative?: boolean;
+
+  /**
+   * Min value constraint for number fields
+   */
+  minValue?: Threshold;
+
+  /**
+   * Max value constraint for number fields
+   */
+  maxValue?: Threshold;
+
+  /**
+   * Email format constraint for string fields
+   */
+  email?: boolean;
+
+  /**
+   * Length greater than 0 constraint for array or string fields
+   */
+  nonempty?: boolean;
+
+  /**
+   * Min length constraint for array and string fields
+   */
+  minLength?: number;
+
+  /**
+   * Max length constraint for array and string fields
+   */
+  maxLength?: number;
+
+  /**
+   * String field as date field mark
+   */
+  dateString?: boolean;
+
+  /**
+   * Date format constraint
+   */
+  dateStringFormat?: string;
 }
