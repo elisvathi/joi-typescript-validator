@@ -1,5 +1,6 @@
-import Joi, { ValidationOptions } from "joi";
 import "reflect-metadata";
+import Joi, { ValidationOptions } from "joi";
+
 import { Class } from "../types";
 import { FieldDescription } from "./FieldDescription";
 
