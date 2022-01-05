@@ -8,9 +8,10 @@ import { FieldDescription } from "./FieldDescription";
  */
 export type SchemaArgs = Joi.Schema | Joi.SchemaFunction;
 
-export const MetadataKeys = {
-    Fields: "validate:fields"
-};
+/**
+ * MetadataKeys constant object containing Reflect metadata keys
+ */
+export const MetadataKeys = { Fields: "validate:fields" };
 
 /**
  * Threshold interface, describing a maximum or minimum (exclusive or inclusive) limit
