@@ -99,18 +99,25 @@ export function getOptions<T>(klass: Class<T>): ValidationOptions {
   return classDescription.options;
 }
 
-export function getGlobalArgs(obj: any): SchemaArgs {
-  const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
-  if (!retVal) {
+/**
+ * Get SchemaArgs passed to class with `@CustomSchema` decorator
+ * @template T
+ * @param {Class<T>} klass Class for which to get the custom Joi schema or schema function passed by decorator
+ * @returns {SchemaArgs} Joi schema or schema function
+ */
+export function getGlobalArgs<T>(klass: Class<T>): SchemaArgs {
+  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
+  if (metadata === undefined) {
     return;
   }
-  if (!obj.name) {
-    return;
+
+  const classDescription = metadata.get(klass);
+  if (classDescription === undefined) {
+    const parentClass = Object.getPrototypeOf(klass) as Class<unknown>;
+    if (parentClass.name !== "") {
+      return getGlobalArgs(parentClass);
+    }
   }
-  const selected = retVal.get(obj);
-  if (!selected) {
-    const result = getGlobalArgs(Object.getPrototypeOf(obj));
-    return result;
-  }
-  return selected.globalArgs;
+
+  return classDescription.globalArgs;
 }
