@@ -3,6 +3,11 @@ import "reflect-metadata";
 import { Class } from "../types";
 import { FieldDescription } from "./FieldDescription";
 
+/**
+ * Joi Schema or Joi SchemaFunction
+ */
+export type SchemaArgs = Joi.Schema | Joi.SchemaFunction;
+
 export const MetadataKeys = {
     Fields: "validate:fields"
 };
@@ -12,9 +17,6 @@ export const MetadataKeys = {
  *  if exclude specified,
  *  adjusts if the threshold value is inclusive or exclusive
  */
-
-export type SchemaFunction = (args: Joi.Schema) => Joi.Schema | Joi.Schema[];
-export type SchemaArgs = Joi.Schema | SchemaFunction;
 
 export interface Threshold {
     value: number;

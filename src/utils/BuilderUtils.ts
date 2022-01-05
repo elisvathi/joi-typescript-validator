@@ -139,7 +139,7 @@ function buildJoiGlobals(fieldSchema: BaseJoi.Schema, description: FieldDescript
 
   if (description.customSchema) {
     if (typeof description.customSchema === "function") {
-      schema = description.customSchema(schema || Joi.any().empty()) as BaseJoi.Schema;
+      schema = description.customSchema(schema || Joi.any().empty());
     } else {
       schema = description.customSchema;
     }
@@ -148,7 +148,7 @@ function buildJoiGlobals(fieldSchema: BaseJoi.Schema, description: FieldDescript
   const globals = getGlobalArgs(description.designType);
   if (globals) {
     if (typeof globals === "function") {
-      schema = globals(schema || Joi.any().empty()) as BaseJoi.Schema;
+      schema = globals(schema || Joi.any().empty());
     } else {
       schema = globals;
     }
@@ -227,7 +227,7 @@ function buildJoiRoot<T>(klass: Class<T>) {
   }), {});
 
   const options = getOptions(klass);
-  const globals = getGlobalArgs(klass) as BaseJoi.Schema | BaseJoi.SchemaFunction;
+  const globals = getGlobalArgs(klass);
 
   const objectSchema = BaseJoi.object().keys(partialSchema);
   const schema = options ? objectSchema.options(options) : objectSchema;
