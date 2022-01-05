@@ -42,7 +42,7 @@ export type TreeMetadata = Map<any, ClassDescription>;
  * @param {FieldDescription} description Field description metadata to attach to class prototype
  */
 function setFieldDescription<T>(target: T, propertyKey: string, description: FieldDescription) {
-  const designType = Reflect.getMetadata("design:type", target, propertyKey) as object;
+  const designType = Reflect.getMetadata("design:type", target, propertyKey) as Class<unknown>;
   const metadata = getFieldsMetadata(target);
 
   metadata.set(target.constructor, metadata.get(target.constructor) || {});
