@@ -18,101 +18,101 @@ const Joi = BaseJoi.extend(JoiDateFactory) as BaseJoi.Root;
 const savedSchemas = new Map<Class<unknown>, BaseJoi.Schema>();
 
 /**
- * Builds the schema for the string field
- * @param tp Field description metadata
+ * Build string field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.StringSchema}
  */
-function buildJoiString(tp: FieldDescription) {
-  if (tp.nonempty) {
-    tp.minLength = Math.max(tp.minLength || 0, 1);
+function buildJoiString(description: FieldDescription) {
+  let schema = Joi.string();
+
+  if (description.minLength || description.nonempty) {
+    schema = schema.min(Math.max(description.minLength || 0, 1));
   }
 
-  let val = Joi.string();
-
-  if (tp.minLength) {
-    val = val.min(tp.minLength);
+  if (description.maxLength) {
+    schema = schema.max(description.maxLength);
   }
 
-  if (tp.maxLength) {
-    val = val.max(tp.maxLength);
+  if (description.email) {
+    schema = schema.email();
   }
 
-  if (tp.email && !tp.dateString) {
-    val = val.email();
-  }
-
-  return val;
-}
-
-function buildJoiDate(tp: FieldDescription) {
-  let val = Joi.date();
-
-  if (tp.dateString && tp.dateStringFormat) {
-    val = val.format(tp.dateStringFormat);
-  }
-
-  return val;
+  return schema;
 }
 
 /**
- * Builds the schema for the number field
- * @param tp Field description metadata
+ * Build date field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.DateSchema}
  */
-function buildJoiNumber(tp: FieldDescription) {
-  let val = Joi.number();
+function buildJoiDate(description: FieldDescription) {
+  let schema = Joi.date();
 
-  if (tp.minValue) {
-    val = val.min(tp.minValue.value);
-
-    if (tp.minValue.exclude) {
-      val = val.invalid(tp.minValue.value);
-    }
+  if (description.dateString && description.dateStringFormat) {
+    schema = schema.format(description.dateStringFormat);
   }
 
-  if (tp.maxValue) {
-    val = val.max(tp.maxValue.value);
-
-    if (tp.maxValue.exclude) {
-      val = val.invalid(tp.maxValue.value);
-    }
-  }
-
-  if (tp.positive) {
-    val = val.positive();
-  }
-
-  if (tp.negative) {
-    val = val.negative();
-  }
-
-  return val;
+  return schema;
 }
 
 /**
- * Builds a Joi array schema
- * @param tp Field description metadata
+ * Build number field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.NumberSchema}
  */
-function buildJoiArray(tp: FieldDescription) {
-  if (tp.nonempty) {
-    tp.minLength = Math.max(tp.minLength || 0, 1);
+function buildJoiNumber(description: FieldDescription) {
+  let schema = Joi.number();
+
+  if (description.minValue) {
+    schema = schema.min(description.minValue.value);
+
+    if (description.minValue.exclude) {
+      schema = schema.invalid(description.minValue.value);
+    }
   }
 
-  let val = Joi.array();
+  if (description.maxValue) {
+    schema = schema.max(description.maxValue.value);
 
-  if (tp.typeInfo) {
-    val = val.items(buildJoiChildren({ designType: tp.typeInfo }));
+    if (description.maxValue.exclude) {
+      schema = schema.invalid(description.maxValue.value);
+    }
+  }
+
+  if (description.positive) {
+    schema = schema.positive();
+  }
+
+  if (description.negative) {
+    schema = schema.negative();
+  }
+
+  return schema;
+}
+
+/**
+ * Build array field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.ArraySchema}
+ */
+function buildJoiArray(description: FieldDescription) {
+  let schema = Joi.array();
+
+  if (description.typeInfo) {
+    schema = schema.items(buildJoiChildren({ designType: description.typeInfo }));
   } else {
-    val = val.items(Joi.any());
+    schema = schema.items(Joi.any());
   }
 
-  if (tp.minLength) {
-    val = val.min(tp.minLength);
+  if (description.minLength || description.nonempty) {
+    schema = schema.min(Math.max(description.minLength || 0, 1));
   }
 
-  if (tp.maxLength) {
-    val = val.max(tp.maxLength);
+  if (description.maxLength) {
+    schema = schema.max(description.maxLength);
   }
 
-  return val;
+  return schema;
 }
 
 /**
@@ -159,27 +159,25 @@ function buildJoiGlobals(fieldSchema: BaseJoi.Schema, description: FieldDescript
 }
 
 /**
- * Returns Joi schema for a non-primitive or array object
- * @param tp Field description metadata
+ * Build non-primitive object field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.ObjectSchema}
  */
-function buildJoiObject(tp: FieldDescription) {
-  const metadata = getMetadata(tp.designType);
+function buildJoiObject(description: FieldDescription) {
+  const metadata = getMetadata(description.designType);
   if (!metadata) {
     return Joi.any();
   }
 
-  const payload = Object.keys(metadata).reduce((acc, item) => {
-    acc[item] = buildJoiChildren(metadata[item]);
-    return acc;
-  }, {});
+  const payload = Object.keys(metadata).reduce((acc, item) => ({
+    ...acc,
+    [item]: buildJoiChildren(metadata[item]),
+  }), {});
 
-  let result = Joi.object().keys(payload);
-  const options = getOptions(tp.designType);
-  if (options) {
-    result = result.options(options);
-  }
+  const schema = Joi.object().keys(payload);
+  const options = getOptions(description.designType);
 
-  return result;
+  return options ? schema.options(options) : schema;
 }
 
 /**
