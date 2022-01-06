@@ -116,6 +116,28 @@ function buildJoiArray(description: FieldDescription) {
 }
 
 /**
+ * Build non-primitive object field Joi schema
+ * @param {FieldDescription} description Field description object
+ * @returns {BaseJoi.ObjectSchema}
+ */
+function buildJoiObject(description: FieldDescription) {
+  const metadata = getMetadata(description.designType);
+  if (!metadata) {
+    return Joi.any();
+  }
+
+  const payload = Object.keys(metadata).reduce((acc, item) => ({
+    ...acc,
+    [item]: buildJoiChildren(metadata[item]),
+  }), {});
+
+  const schema = Joi.object().keys(payload);
+  const options = getOptions(description.designType);
+
+  return options ? schema.options(options) : schema;
+}
+
+/**
  * Extend field Joi schema with global conditions
  * @param {BaseJoi.Schema}   fieldSchema Field Joi schema
  * @param {FieldDescription} description Field description object
@@ -156,28 +178,6 @@ function buildJoiGlobals(fieldSchema: BaseJoi.Schema, description: FieldDescript
   }
 
   return schema;
-}
-
-/**
- * Build non-primitive object field Joi schema
- * @param {FieldDescription} description Field description object
- * @returns {BaseJoi.ObjectSchema}
- */
-function buildJoiObject(description: FieldDescription) {
-  const metadata = getMetadata(description.designType);
-  if (!metadata) {
-    return Joi.any();
-  }
-
-  const payload = Object.keys(metadata).reduce((acc, item) => ({
-    ...acc,
-    [item]: buildJoiChildren(metadata[item]),
-  }), {});
-
-  const schema = Joi.object().keys(payload);
-  const options = getOptions(description.designType);
-
-  return options ? schema.options(options) : schema;
 }
 
 /**
