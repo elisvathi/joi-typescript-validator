@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { ValidationOptions } from "joi";
 
 import { MetadataKeys } from "..";
-import { SchemaArgs, TreeMetadata } from "../decorators/BaseDecorators";
+import { FieldsMap, SchemaArgs, TreeMetadata } from "../decorators/BaseDecorators";
 import { Class } from "../types";
 
 /**
@@ -15,66 +15,38 @@ export function printMetadata<T>(klass: Class<T>) {
 }
 
 /**
- * Extracts metadata for a particular object, aware if that object extends another objects,
- * an joins the metadata properties accordingly ,
- * Method checks recursively through the same object to find super-class metadata
- * @param obj Object class to extract metadata for
- * @param treeMetadata  Metadata registered with Reflect
+ * Extract fields metadata from class, taking into account parent classes.
+ * Recursevly get the metadata from class parents and merge them accordingly.
+ * @template T
+ * @param {Class<T>} klass Class, for which, to get the fields metadata
+ * @param {TreeMetadata} metadata Metadata attached with reflect-metadata
+ * @returns {FieldsMap}
  */
-function getMetadataFromObject(obj: any, treeMetadata: TreeMetadata) {
-  /**
-   * Current class name
-   */
-  const name = obj;
-  /**
-   * Get prototype an prototype name of the class
-   * to check if it extends from another class
-   */
-  const proto = Object.getPrototypeOf(obj);
-  const protoName = proto.name;
-  /**
-   * Current class metadata
-   * WIll override if necessary the super class metadata
-   */
-  const existingObject = treeMetadata.get(name) || {};
-  if (!!protoName && protoName !== "Object") {
-    const existingFields = existingObject.fields || {};
-    let superMetadata = getMetadataFromObject(proto, treeMetadata);
-    superMetadata = { ...superMetadata };
-    Object.keys(existingFields).forEach((x) => {
-      if (!superMetadata[x]) {
-        /**
-         * If a property exist on the current class but not on the super class
-         * insert the property
-         */
-        superMetadata[x] = existingFields[x];
-      } else {
-        /**
-         * Override the super class metadata for that field with the latest class field metadata
-         */
-        superMetadata[x] = { ...superMetadata[x], ...existingFields[x] };
-      }
-    });
-    return superMetadata;
-  } else {
-    return existingObject.fields || {};
+function extractClassMetadata<T>(klass: Class<T>, metadata: TreeMetadata): FieldsMap {
+  const classDescription = metadata.get(klass) || {};
+  const fields = classDescription.fields || {};
+
+  const parentClass = Object.getPrototypeOf(klass) as Class<unknown>;
+  if (parentClass.name !== "") {
+    return { ...extractClassMetadata(parentClass, metadata), ...fields };
   }
+
+  return fields;
 }
 
 /**
- * Return type metadata
- * @param obj
+ * Get class fields metadata
+ * @template T
+ * @param {Class<T>} klass Class, for which, to get the fields metadata
+ * @returns {FieldsMap}
  */
-export function getMetadata(obj: any) {
-  /**
-   * Gets the metadata for the current class,
-   * Returns a key value object with all base classes and inheriting classes
-   */
-  const retVal = Reflect.getMetadata(MetadataKeys.Fields, obj.prototype);
-  if (!retVal) {
+export function getMetadata<T>(klass: Class<T>) {
+  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
+  if (metadata === undefined) {
     return;
   }
-  return getMetadataFromObject(obj, retVal);
+
+  return extractClassMetadata(klass, metadata);
 }
 
 /**

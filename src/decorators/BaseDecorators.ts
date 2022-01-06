@@ -50,13 +50,18 @@ export interface ConditionSchema {
 }
 
 /**
+ * Key-value index signature containing description metadata for each field
+ */
+export type FieldsMap = { [key: string]: FieldDescription };
+
+/**
  * Class description metadata
  */
 export class ClassDescription {
   /**
    * Class fields object containing each field's FieldDescription
    */
-  public fields?: { [key: string]: FieldDescription };
+  public fields?: FieldsMap;
 
   /**
    * Class options attached with `@SchemaOptions` decorator
