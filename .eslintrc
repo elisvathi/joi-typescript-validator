@@ -16,6 +16,12 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "rules": {
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true
+      }
+    ],
     "no-unused-vars": [
       "warn",
       {
