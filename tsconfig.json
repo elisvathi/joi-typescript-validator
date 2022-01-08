@@ -1,18 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "es2018",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "sourceMap": false,
-        "declaration": true,
-        "removeComments": false,
-        "types": ["joi", "reflect-metadata", "mocha", "chai"],
-        "outDir": "lib"
-    },
-    "files": ["src/index.ts"],
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "src/**/flycheck*"]
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "commonjs",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "lib"
+  }
 }
