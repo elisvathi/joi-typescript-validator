@@ -86,15 +86,16 @@ export type TreeMetadata = Map<unknown, ClassDescription>;
  * @param {string}           propertyKey Field key to identify the field, for which, to set the description and design type
  * @param {FieldDescription} description Field description metadata to attach to class prototype
  */
-function setFieldDescription<T>(target: T, propertyKey: string, description: FieldDescription) {
+function setFieldDescription<T extends object>(target: T, propertyKey: string, description: FieldDescription) {
   const designType = Reflect.getMetadata("design:type", target, propertyKey) as Class<unknown>;
   const metadata = getFieldsMetadata(target);
+  const classDescription = metadata.get(target.constructor) || {};
 
-  metadata.set(target.constructor, metadata.get(target.constructor) || {});
-  const fields = metadata.get(target.constructor).fields || {};
+  const fields = classDescription.fields || {};
   fields[propertyKey] = fields[propertyKey] || {};
   fields[propertyKey] = { ...fields[propertyKey], designType, ...description };
-  metadata.get(target.constructor).fields = fields;
+
+  metadata.set(target.constructor, { ...classDescription, fields });
 
   Reflect.defineMetadata(MetadataKeys.Fields, metadata, target);
 }
@@ -107,8 +108,9 @@ function setFieldDescription<T>(target: T, propertyKey: string, description: Fie
  */
 function setSchemaGlobals<T>(klass: Class<T>, args: SchemaArgs) {
   const metadata = getFieldsMetadata(klass.prototype);
-  metadata.set(klass, metadata.get(klass) || {});
-  metadata.get(klass).globalArgs = args;
+  const classDescription = metadata.get(klass) || {};
+
+  metadata.set(klass, { ...classDescription, globalArgs: args });
 
   Reflect.defineMetadata(MetadataKeys.Fields, metadata, klass);
 }
@@ -121,8 +123,9 @@ function setSchemaGlobals<T>(klass: Class<T>, args: SchemaArgs) {
  */
 function setSchemaOptions<T>(klass: Class<T>, options: ValidationOptions) {
   const metadata = getFieldsMetadata(klass.prototype);
-  metadata.set(klass, metadata.get(klass) || {});
-  metadata.get(klass).options = options;
+  const classDescription = metadata.get(klass) || {};
+
+  metadata.set(klass, { ...classDescription, options });
 
   Reflect.defineMetadata(MetadataKeys.Fields, metadata, klass);
 }
@@ -142,7 +145,7 @@ function getFieldsMetadata<T>(target: T) {
  * Mark field value as required
  * @template T
  */
-export function Required<T>() {
+export function Required<T extends object>() {
   return (target: T, propertyKey: string) => {
     const description = { required: true };
     setFieldDescription(target, propertyKey, description);
@@ -153,7 +156,7 @@ export function Required<T>() {
  * Mark field value as optional
  * @template T
  */
-export function Optional<T>() {
+export function Optional<T extends object>() {
   return (target: T, propertyKey: string) => {
     const description = { required: false };
     setFieldDescription(target, propertyKey, description);
@@ -165,7 +168,7 @@ export function Optional<T>() {
  * @template T
  * @param {boolean} [isEnabled=true] Flag used to overwrite decorator on parent class field
  */
-export function Nullable<T>(isEnabled = true) {
+export function Nullable<T extends object>(isEnabled = true) {
   return (target: T, propertyKey: string) => {
     const description = { nullable: isEnabled };
     setFieldDescription(target, propertyKey, description);
@@ -178,7 +181,7 @@ export function Nullable<T>(isEnabled = true) {
  * @template I
  * @param {Class<I>} type Primitive or class value to set the field type to
  */
-export function ItemType<T, I>(type: Class<I>) {
+export function ItemType<T extends object, I>(type: Class<I>) {
   return (target: T, propertyKey: string) => {
     const description = { typeInfo: type };
     setFieldDescription(target, propertyKey, description);
@@ -190,7 +193,7 @@ export function ItemType<T, I>(type: Class<I>) {
  * @template T
  * @param {Threshold | number} value Value, by which, to constrain the field to be less than or equal to
  */
-export function Max<T>(value: Threshold | number) {
+export function Max<T extends object>(value: Threshold | number) {
   const maxValue = typeof (value) === "number" ? { value } : value;
 
   return (target: T, propertyKey: string) => {
@@ -204,7 +207,7 @@ export function Max<T>(value: Threshold | number) {
  * @template T
  * @param {Threshold | number} value Value, by which, to constrain the field to be greater than or equal to
  */
-export function Min<T>(value: Threshold | number) {
+export function Min<T extends object>(value: Threshold | number) {
   const minValue = typeof (value) === "number" ? { value } : value;
 
   return (target: T, propertyKey: string) => {
@@ -218,7 +221,7 @@ export function Min<T>(value: Threshold | number) {
  * @template T
  * @param {boolean} [isEnabled=true] Flag used to overwrite decorator on parent class field
  */
-export function Positive<T>(isEnabled = true) {
+export function Positive<T extends object>(isEnabled = true) {
   return (target: T, propertyKey: string) => {
     const description = { positive: isEnabled };
     setFieldDescription(target, propertyKey, description);
@@ -230,7 +233,7 @@ export function Positive<T>(isEnabled = true) {
  * @template T
  * @param {boolean} [isEnabled=true] Flag used to overwrite decorator on parent class field
  */
-export function Negative<T>(isEnabled = true) {
+export function Negative<T extends object>(isEnabled = true) {
   return (target: T, propertyKey: string) => {
     const description = { negative: isEnabled };
     setFieldDescription(target, propertyKey, description);
@@ -242,7 +245,7 @@ export function Negative<T>(isEnabled = true) {
  * @template T
  * @param {boolean} [isEnabled=true] Flag used to overwrite decorator on parent class field
  */
-export function NotEmpty<T>(isEnabled = true) {
+export function NotEmpty<T extends object>(isEnabled = true) {
   return (target: T, propertyKey: string) => {
     const description = { nonempty: isEnabled };
     setFieldDescription(target, propertyKey, description);
@@ -254,7 +257,7 @@ export function NotEmpty<T>(isEnabled = true) {
  * @template T
  * @param {number} value Value, by which, to constrain the maximum length
  */
-export function MaxLength<T>(value: number) {
+export function MaxLength<T extends object>(value: number) {
   return (target: T, propertyKey: string) => {
     const description = { maxLength: value };
     setFieldDescription(target, propertyKey, description);
@@ -266,7 +269,7 @@ export function MaxLength<T>(value: number) {
  * @template T
  * @param {number} value Value, by which, to constrain the minimum length
  */
-export function MinLength<T>(value: number) {
+export function MinLength<T extends object>(value: number) {
   return (target: T, propertyKey: string) => {
     const description = { minLength: value };
     setFieldDescription(target, propertyKey, description);
@@ -277,7 +280,7 @@ export function MinLength<T>(value: number) {
  * @template T
  * @param {unknown[]} args Values, by which, to constrain the field
  */
-export function ValidOptions<T>(...args: unknown[]) {
+export function ValidOptions<T extends object>(...args: unknown[]) {
   return (target: T, propertyKey: string) => {
     const description = { options: args };
     setFieldDescription(target, propertyKey, description);
@@ -289,7 +292,7 @@ export function ValidOptions<T>(...args: unknown[]) {
  * @template T
  * @param {boolean} [isEnabled=true] Flag used to overwrite decorator on parent class field
  */
-export function Email<T>(isEnabled = true) {
+export function Email<T extends object>(isEnabled = true) {
   return (target: T, propertyKey: string) => {
     const description = { email: isEnabled };
     setFieldDescription(target, propertyKey, description);
@@ -301,7 +304,7 @@ export function Email<T>(isEnabled = true) {
  * @template T
  * @param {string} [format="YYYY-MM-DD"] Format, by which, to constrain the field
  */
-export function DateString<T>(format = "YYYY-MM-DD") {
+export function DateString<T extends object>(format = "YYYY-MM-DD") {
   return (target: T, propertyKey: string) => {
     const description = { dateString: true, dateStringFormat: format };
     setFieldDescription(target, propertyKey, description);
@@ -313,11 +316,11 @@ export function DateString<T>(format = "YYYY-MM-DD") {
  * @template T
  * @param {SchemaArgs} schema Joi schema or schema fuction, by which, to constrain field or class
  */
-export function CustomSchema<T>(schema: SchemaArgs) {
-  return (target: T | Class<T>, propertyKey?: string) => {
+export function CustomSchema<T extends object>(schema: SchemaArgs) {
+  return (target: T, propertyKey?: string) => {
     if (propertyKey) {
       const description = { customSchema: schema };
-      setFieldDescription(target as T, propertyKey, description);
+      setFieldDescription(target, propertyKey, description);
     } else {
       setSchemaGlobals(target as Class<T>, schema);
     }

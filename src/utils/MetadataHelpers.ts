@@ -38,9 +38,13 @@ function extractClassMetadata<T>(klass: Class<T>, metadata: TreeMetadata): Field
  * Get class fields metadata
  * @template T
  * @param {Class<T>} klass Class, for which, to get the fields metadata
- * @returns {FieldsMap}
+ * @returns {FieldsMap | void}
  */
-export function getMetadata<T>(klass: Class<T>) {
+export function getMetadata<T>(klass: Class<T> | undefined) {
+  if (klass === undefined) {
+    return;
+  }
+
   const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
   if (metadata === undefined) {
     return;
@@ -53,10 +57,14 @@ export function getMetadata<T>(klass: Class<T>) {
  * Get ValidationOptions passed to class with `@SchemaOptions` decorator
  * @template T
  * @param {Class<T>} klass Class for which to get the schema options passed by decorator
- * @returns {ValidationOptions} Joi ValidationOptions
+ * @returns {ValidationOptions | void} Joi ValidationOptions
  */
-export function getOptions<T>(klass: Class<T>): ValidationOptions {
-  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
+export function getOptions<T>(klass: Class<T> | undefined): ValidationOptions | void {
+  if (klass === undefined) {
+    return;
+  }
+
+  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata | undefined;
   if (metadata === undefined) {
     return;
   }
@@ -67,19 +75,23 @@ export function getOptions<T>(klass: Class<T>): ValidationOptions {
     if (parentClass.name !== "") {
       return getOptions(parentClass);
     }
+  } else {
+    return classDescription.options;
   }
-
-  return classDescription.options;
 }
 
 /**
  * Get SchemaArgs passed to class with `@CustomSchema` decorator
  * @template T
  * @param {Class<T>} klass Class for which to get the custom Joi schema or schema function passed by decorator
- * @returns {SchemaArgs} Joi schema or schema function
+ * @returns {SchemaArgs | void} Joi schema or schema function
  */
-export function getGlobalArgs<T>(klass: Class<T>): SchemaArgs {
-  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata;
+export function getGlobalArgs<T>(klass: Class<T> | undefined): SchemaArgs | void {
+  if (klass === undefined) {
+    return;
+  }
+
+  const metadata = Reflect.getMetadata(MetadataKeys.Fields, klass.prototype) as TreeMetadata | undefined;
   if (metadata === undefined) {
     return;
   }
@@ -90,7 +102,7 @@ export function getGlobalArgs<T>(klass: Class<T>): SchemaArgs {
     if (parentClass.name !== "") {
       return getGlobalArgs(parentClass);
     }
+  } else {
+    return classDescription.globalArgs;
   }
-
-  return classDescription.globalArgs;
 }
