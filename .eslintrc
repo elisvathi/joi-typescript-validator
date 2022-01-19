@@ -28,6 +28,13 @@
       "double"
     ],
     "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-namespace": [
+      "error",
+      {
+        "allowDeclarations": true,
+        "allowDefinitionFiles": true
+      }
+    ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
