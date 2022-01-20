@@ -23,6 +23,10 @@
       }
     ],
     "no-unused-vars": "off",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "quotes": [
       "error",
       "double"
