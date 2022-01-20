@@ -96,7 +96,7 @@ class Example {
 }
 
 // Joi schema
-schema.allow(null)
+schema.allow(null);
 ```
 or...
 
@@ -157,12 +157,12 @@ class Example {
   /**
    * Excludes the value from being accepted
    * */
-  @Max({value: 42, exclude: true})
+  @Max({ value: 42, exclude: true })
   public field: number;
 }
 
 // Joi schema
-schema.max(42).invalid(42)
+schema.max(42).invalid(42);
 ```
 
 ### Min Decorator
@@ -356,7 +356,7 @@ class Example {
 
 // Joi schema
 schema.array().items(Joi.object().keys({
-  id: Joi.number().required()
+  id: Joi.number().required(),
 }));
 ```
 
@@ -477,8 +477,8 @@ class Example {
 // Joi schema
 schema.object().keys({
   child: Joi.object().keys({
-    id: Joi.number().optional()
-  }).required()
+    id: Joi.number().optional(),
+  }).required(),
 });
 ```
 ## Inheritance
@@ -501,7 +501,7 @@ class Inherited extends BaseObject {
 // Joi schema
 schema.object().keys({
   id: Joi.number().optional(),
-  name: Join.string().optional()
+  name: Join.string().optional(),
 });
 ```
 You can also override validation properties from the base class
@@ -531,7 +531,7 @@ schema.object().keys({
 // Derived Class
 schema.object().keys({
   primary: Joi.string().email().optional(),
-  name: Join.string().optional()
+  name: Join.string().optional(),
 });
 ```
 
@@ -560,10 +560,10 @@ class Example {
   public email: string;
 }
 
-const value : Example = new Example();
-value.email = "john@example.com"
+const value: Example = new Example();
+value.email = "john@example.com";
 
-Validate(Example, value).catch(error => { console.log(error.message) });
+Validate(Example, value).catch((error) => { console.log(error.message) });
 ```
 
 ## Example
