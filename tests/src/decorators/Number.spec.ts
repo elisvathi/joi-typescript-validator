@@ -103,50 +103,95 @@ describe("Number attribute decorators", function () {
   });
 
   describe("@Positive decorator", function () {
-    class User {
-      @Positive()
-      public code: number;
-    }
+    describe("same class", function () {
+      class User {
+        @Positive()
+        public code: number;
+      }
 
-    it("should pass when field value is greater than 0", () => {
-      const user = new User();
+      it("should pass when field value is greater than 0", () => {
+        const user = new User();
 
-      user.code = 1;
-      expect(user).to.be.valid;
+        user.code = 1;
+        expect(user).to.be.valid;
+      });
+
+      it("should error when field value is less than or equal to 0", () => {
+        const user = new User();
+
+        user.code = 0;
+        expect(user).to.not.be.valid;
+
+        user.code = -1;
+        expect(user).to.not.be.valid;
+      });
     });
 
-    it("should error when field value is less than or equal to 0", () => {
-      const user = new User();
+    describe("inheritance", function () {
+      class Base {
+        @Positive()
+        public code: number;
+      }
 
-      user.code = 0;
-      expect(user).to.not.be.valid;
+      class User extends Base {
+        @Positive(false)
+        public code: number;
+      }
 
-      user.code = -1;
-      expect(user).to.not.be.valid;
+      it("should pass when field value is less than or equal to 0 and false is passed to decorator", () => {
+        const user = new User();
+
+        user.code = 0;
+        expect(user).to.be.valid;
+
+        user.code = -1;
+        expect(user).to.be.valid;
+      });
     });
   });
 
   describe("@Negative decorator", function () {
-    class User {
-      @Negative()
-      public code: number;
-    }
+    describe("same class", function () {
+      class User {
+        @Negative()
+        public code: number;
+      }
 
-    it("should pass when field value is less than 0", () => {
-      const user = new User();
+      it("should pass when field value is less than 0", () => {
+        const user = new User();
 
-      user.code = -1;
-      expect(user).to.be.valid;
+        user.code = -1;
+        expect(user).to.be.valid;
+      });
+
+      it("should error when field value is greater than or equal to 0", () => {
+        const user = new User();
+
+        user.code = 0;
+        expect(user).to.not.be.valid;
+
+        user.code = 1;
+        expect(user).to.not.be.valid;
+      });
     });
 
-    it("should error when field value is greater than or equal to 0", () => {
-      const user = new User();
+    describe("inheritance", function () {
+      class Base {
+        @Negative()
+        public code: number;
+      }
 
-      user.code = 0;
-      expect(user).to.not.be.valid;
+      class User extends Base {
+        @Negative(false)
+        public code: number;
+      }
 
-      user.code = 1;
-      expect(user).to.not.be.valid;
+      it("should pass when field value is greater than or equal to 0 and false is passed to decorator", () => {
+        const user = new User();
+
+        user.code = 1;
+        expect(user).to.be.valid;
+      });
     });
   });
 });
