@@ -27,7 +27,14 @@
       "error",
       "double"
     ],
-    "@typescript-eslint/indent": ["error", 2],
+    "space-before-blocks": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
     "@typescript-eslint/no-namespace": [
       "error",
       {
