@@ -16,6 +16,10 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "rules": {
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "no-param-reassign": [
       "error",
       {
