@@ -35,6 +35,14 @@
       "error",
       "always"
     ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "asyncArrow": "always",
+        "named": "never"
+      }
+    ],
     "@typescript-eslint/indent": [
       "error",
       2
