@@ -16,7 +16,7 @@ describe("Base decorators", function () {
         it("should pass when field value is not empty string or undefined", () => {
           const user = new User();
 
-          user.name = "jane";
+          user.name = "Jane";
           expect(user).to.be.valid;
         });
 
@@ -44,7 +44,7 @@ describe("Base decorators", function () {
         it("should pass when field value is not empty string or undefined", () => {
           const user = new User();
 
-          user.name = "jane";
+          user.name = "Jane";
           expect(user).to.be.valid;
         });
 
@@ -68,7 +68,7 @@ describe("Base decorators", function () {
       it("should pass when field value is not undefined", () => {
         const user = new User();
 
-        user.name = "jane";
+        user.name = "Jane";
         expect(user).to.be.valid;
 
         user.name = null;
@@ -94,7 +94,7 @@ describe("Base decorators", function () {
       it("should pass when field value is not empty string or undefined", () => {
         const user = new User();
 
-        user.name = "jane";
+        user.name = "Jane";
         expect(user).to.be.valid;
       });
 
@@ -316,7 +316,7 @@ describe("Base decorators", function () {
     it("should pass when object complies with Joi validation options passed to decorator", () => {
       const user = new User();
 
-      user.name = "jane";
+      user.name = "Jane";
       expect(user).to.be.valid;
     });
   });

@@ -39,7 +39,7 @@ describe("getMetadata function", function () {
       @Optional()
       @Nullable()
       @MaxLength(5)
-      public favourtieColors: string[] | null;
+      public favoriteColors: string[] | null;
 
       @Required()
       @DateString()
@@ -97,7 +97,7 @@ describe("getMetadata function", function () {
           email: true,
           required: false,
         },
-        favourtieColors: {
+        favoriteColors: {
           designType: Object,
           maxLength: 5,
           nullable: true,
