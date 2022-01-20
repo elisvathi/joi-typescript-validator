@@ -57,8 +57,8 @@ Invalidates the object if the field doesn't exist
 
 ```typescript
 class Example {
-    @Required()
-    public field: string;
+  @Required()
+  public field: string;
 }
 
 // Joi schema
@@ -75,8 +75,8 @@ Turns off the required flag for the field
 
 ```typescript
 class Example {
-    @Optional()
-    public field: string;
+  @Optional()
+  public field: string;
 }
 
 // Joi schema
@@ -91,8 +91,8 @@ Allows the field to have ***null*** as a value
 
 ```typescript
 class Example {
-    @Nullable()
-    public field: string;
+  @Nullable()
+  public field: string;
 }
 
 // Joi schema
@@ -102,17 +102,17 @@ or...
 
 ```typescript
 class Example {
-    @Nullable()
-    public field: string;
+  @Nullable()
+  public field: string;
 }
 
 class Derived extends Example {
-    /**
-     * Use it with a boolean value if you need to disable the value on
-     * a derived class
-     * */
-    @Nullable(false)
-    public field: string;
+  /**
+   * Use it with a boolean value if you need to disable the value on
+   * a derived class
+   * */
+  @Nullable(false)
+  public field: string;
 }
 ```
 
@@ -125,8 +125,8 @@ Allows only the values provided in the arguments
 
 ```typescript
 class Example {
-    @ValidOptions("name", "age")
-    public field: string;
+  @ValidOptions("name", "age")
+  public field: string;
 }
 
 // Joi schema
@@ -143,8 +143,8 @@ Specifies the max value for the field
 
 ```typescript
 class Example {
-    @Max(42)
-    public field: number;
+  @Max(42)
+  public field: number;
 }
 
 // Joi schema
@@ -154,11 +154,11 @@ or...
 
 ```typescript
 class Example {
-    /**
-     * Excludes the value from being accepted
-     * */
-    @Max({value: 42, exclude: true})
-    public field: number;
+  /**
+   * Excludes the value from being accepted
+   * */
+  @Max({value: 42, exclude: true})
+  public field: number;
 }
 
 // Joi schema
@@ -173,8 +173,8 @@ Specifies the min value for the field
 
 ```typescript
 class Example {
-    @Min(42)
-    public field: number;
+  @Min(42)
+  public field: number;
 }
 
 // Joi schema
@@ -184,11 +184,11 @@ or...
 
 ```typescript
 class Example {
-    /**
-     * Excludes the value from being accepted
-     * */
-    @Min({ value: 42, exclude: true })
-    public field: number;
+  /**
+   * Excludes the value from being accepted
+   * */
+  @Min({ value: 42, exclude: true })
+  public field: number;
 }
 
 // Joi schema
@@ -203,17 +203,17 @@ Allows positive values only to the number field
 
 ```typescript
 class Example {
-    @Positive()
-    public field: number;
+  @Positive()
+  public field: number;
 }
 
 // Joi schema
 schema.positive();
 
 class Derived extends Example {
-    // Use the flags if you need to override it when you inherit
-    @Positive(false)
-    public field: number;
+  // Use the flags if you need to override it when you inherit
+  @Positive(false)
+  public field: number;
 }
 ```
 
@@ -225,17 +225,17 @@ Allows negative values only to the number field
 
 ```typescript
 class Example {
-    @Negative()
-    public field: number;
+  @Negative()
+  public field: number;
 }
 
 // Joi schema
 schema.negative();
 
 class Derived extends Example {
-    // Use the flags if you need to override it when you inherit
-    @Negative(false)
-    public field: number;
+  // Use the flags if you need to override it when you inherit
+  @Negative(false)
+  public field: number;
 }
 ```
 
@@ -249,8 +249,8 @@ Sets a lower limit to the string length
 
 ```typescript
 class Example {
-    @MinLength(42)
-    public field: string;
+  @MinLength(42)
+  public field: string;
 }
 
 // Joi schema
@@ -265,8 +265,8 @@ Sets an upper limit to the string length
 
 ```typescript
 class Example {
-    @MaxLength(42)
-    public field: string;
+  @MaxLength(42)
+  public field: string;
 }
 
 // Joi schema
@@ -281,17 +281,17 @@ Sets the string lower limit to 1 character
 
 ```typescript
 class Example {
-    @NotEmpty()
-    public field: string;
+  @NotEmpty()
+  public field: string;
 }
 
 // Joi schema
 schema.min(1);
 
 class Derived extends Example {
-    // Use the flag if you want to disable the NotEmpty check on a derived class
-    @NotEmpty(false)
-    public field: string;
+  // Use the flag if you want to disable the NotEmpty check on a derived class
+  @NotEmpty(false)
+  public field: string;
 }
 ```
 
@@ -303,17 +303,17 @@ String field should be a valid email
 
 ```typescript
 class Example {
-    @Email()
-    public field: string;
+  @Email()
+  public field: string;
 }
 
 // Joi schema
 schema.email();
 
 class Derived extends Example {
-    // Use the flag if you want to disable the Email check on a derived class
-    @Email(false)
-    public field: string;
+  // Use the flag if you want to disable the Email check on a derived class
+  @Email(false)
+  public field: string;
 }
 ```
 
@@ -325,10 +325,10 @@ Validates the string as a date using the specified format
 
 ```typescript
 class Example {
-    // Default is YYYY-MM-DD
-    @Required()
-    @Date("YY-MM-DD")
-    public date: string;
+  // Default is YYYY-MM-DD
+  @Required()
+  @Date("YY-MM-DD")
+  public date: string;
 }
 
 // Joi schema
@@ -345,18 +345,18 @@ Is required to specify the array item type if the array items should be validate
 
 ```typescript
 class Item {
-    @Required()
-    public id: number;
+  @Required()
+  public id: number;
 }
 
 class Example {
-    @ItemType(Item)
-    public field: Item[];
+  @ItemType(Item)
+  public field: Item[];
 }
 
 // Joi schema
 schema.array().items(Joi.object().keys({
-    id: Joi.number().required()
+  id: Joi.number().required()
 }));
 ```
 
@@ -368,8 +368,8 @@ Sets a lower limit to the array length
 
 ```typescript
 class Example {
-    @MinLength(42)
-    public field: string[];
+  @MinLength(42)
+  public field: string[];
 }
 
 // Joi schema
@@ -384,8 +384,8 @@ Sets an upper limit to the array length
 
 ```typescript
 class Example {
-    @MaxLength(42)
-    public field: string[];
+  @MaxLength(42)
+  public field: string[];
 }
 
 // Joi schema
@@ -400,17 +400,17 @@ Sets the array lower limit to 1 item
 
 ```typescript
 class Example {
-    @NotEmpty()
-    public field: string[];
+  @NotEmpty()
+  public field: string[];
 }
 
 // Joi schema
 schema.array().min(1);
 
 class Derived extends Example {
-    // Use the flag if you want to disable the NotEmpty check on a derived class
-    @NotEmpty(false)
-    public field: string[];
+  // Use the flag if you want to disable the NotEmpty check on a derived class
+  @NotEmpty(false)
+  public field: string[];
 }
 ```
 
@@ -425,9 +425,9 @@ Uses joi-date-extensions Extension as a backend
 
 ```typescript
 class Example {
-    @Required()
-    @DateString("YYYY-MM-DD")
-    public date: Date;
+  @Required()
+  @DateString("YYYY-MM-DD")
+  public date: Date;
 }
 
 // Joi schema
@@ -445,15 +445,15 @@ You can create a custom Joi schema for the field or append properties to existin
 ```typescript
 // Using a lambda function
 class Example {
-    @Required()
-    @CustomSchema((current: Joi.Schema) => current.optional())
-    public field: string;
+  @Required()
+  @CustomSchema((current: Joi.Schema) => current.optional())
+  public field: string;
 }
 
 // Creating a schema from scratch, overrides any pre-built schema from other decorators
 class SecondExample {
-    @CustomSchema(Joi.string().optional())
-    public date: Date;
+  @CustomSchema(Joi.string().optional())
+  public date: Date;
 }
 ```
 
@@ -465,20 +465,20 @@ Validates the child fields if their type is another class
 
 ```typescript
 class ChildObject {
-    @Optional()
-    id: number;
+  @Optional()
+  id: number;
 }
 
 class Example {
-    @Required()
-    public child: ChildObject;
+  @Required()
+  public child: ChildObject;
 }
 
 // Joi schema
 schema.object().keys({
-    child: Joi.object().keys({
-        id: Joi.number().optional()
-    }).required()
+  child: Joi.object().keys({
+    id: Joi.number().optional()
+  }).required()
 });
 ```
 ## Inheritance
@@ -489,49 +489,49 @@ Inherited classes inherit the validation metadata from the base class
 
 ```typescript
 class BaseObject {
-    @Optional()
-    id: number;
+  @Optional()
+  id: number;
 }
 
 class Inherited extends BaseObject {
-    @Optional()
-    name: string;
+  @Optional()
+  name: string;
 }
 
 // Joi schema
 schema.object().keys({
-    id: Joi.number().optional(),
-    name: Join.string().optional()
+  id: Joi.number().optional(),
+  name: Join.string().optional()
 });
 ```
 You can also override validation properties from the base class
 
 ```typescript
 class BaseObject {
-    @Required()
-    @Email()
-    primary: string;
+  @Required()
+  @Email()
+  primary: string;
 }
 
 class Inherited extends BaseObject {
-    @Optional()
-    name: string;
+  @Optional()
+  name: string;
 
-    @Optional()
-    primary: string;
+  @Optional()
+  primary: string;
 }
 
 // Joi schema
 
 // Base Class
 schema.object().keys({
-    primary: Joi.string().email().required(),
+  primary: Joi.string().email().required(),
 });
 
 // Derived Class
 schema.object().keys({
-    primary: Joi.string().email().optional(),
-    name: Join.string().optional()
+  primary: Joi.string().email().optional(),
+  name: Join.string().optional()
 });
 ```
 
@@ -541,9 +541,9 @@ schema.object().keys({
 import { getSchema } from "joi-typescript-validator"
 
 class Example {
-    @Required()
-    @Email()
-    email: string;
+  @Required()
+  @Email()
+  email: string;
 }
 
 const schema: Joi.Schema = getSchema(Example);
@@ -555,9 +555,9 @@ const schema: Joi.Schema = getSchema(Example);
 import { Validate } from "joi-typescript-validator"
 
 class Example {
-    @Required()
-    @Email()
-    public email: string;
+  @Required()
+  @Email()
+  public email: string;
 }
 
 const value : Example = new Example();
@@ -572,54 +572,54 @@ Validate(Example, value).catch(error => { console.log(error.message) });
 import { Validate } from "joi-typescript-validator"
 
 class UserData {
-    @Optional()
-    allowNotifications: boolean;
+  @Optional()
+  allowNotifications: boolean;
 }
 
 class Location {
-    @Required()
-    @NotEmpty()
-    name: string;
+  @Required()
+  @NotEmpty()
+  name: string;
 
-    @Required()
-    latitude: number;
+  @Required()
+  latitude: number;
 
-    @Required()
-    longitude: number;
+  @Required()
+  longitude: number;
 }
 
 class User {
-    @Required()
-    @Email()
-    public email: string;
+  @Required()
+  @Email()
+  public email: string;
 
-    @Required()
-    @MaxLength(30)
-    @MinLength(5)
-    public username: string;
+  @Required()
+  @MaxLength(30)
+  @MinLength(5)
+  public username: string;
 
-    @Required()
-    @MaxLength(30)
-    @MinLength(5)
-    public password: string;
+  @Required()
+  @MaxLength(30)
+  @MinLength(5)
+  public password: string;
 
-    @Optional()
-    @Min({ value: 18 })
-    @Max({ value: 30, exclude: true })
-    public age: number;
+  @Optional()
+  @Min({ value: 18 })
+  @Max({ value: 30, exclude: true })
+  public age: number;
 
-    @Required()
-    public data: UserData;
+  @Required()
+  public data: UserData;
 
-    @Required()
-    @ItemType(Location)
-    @MaxLength(10)
-    public locations: Location[];
+  @Required()
+  @ItemType(Location)
+  @MaxLength(10)
+  public locations: Location[];
 
 }
 
 async function fetchData(): Promise<User> {
-    ...
+  ...
 }
 
 fetchData().then((result: User) => Validate(User, user));
