@@ -327,7 +327,7 @@ Validates the string as a date using the specified format
 class Example {
   // Default is YYYY-MM-DD
   @Required()
-  @Date("YY-MM-DD")
+  @DateString("YY-MM-DD")
   public date: string;
 }
 
