@@ -312,7 +312,7 @@ export function DateString<T extends object>(format = "YYYY-MM-DD") {
 }
 
 /**
- * Constrain field or entire class fields by the Joi schema or function passed
+ * Constrain field or entire class fields by the Joi schema or schema function passed
  * @template T
  * @param {SchemaArgs} schema Joi schema or schema fuction, by which, to constrain field or class
  */
