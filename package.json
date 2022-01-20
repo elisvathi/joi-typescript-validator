@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
+    "lint": "eslint .",
     "build": "tsc --project tsconfig.build.json"
   },
   "keywords": [
