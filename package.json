@@ -30,7 +30,7 @@
     "eslint-plugin-import": "^2.25.4",
     "mocha": "^9.1.4",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@joi/date": "^2.1.0",
