@@ -1,8 +1,9 @@
-import BaseJoi from 'joi';
+import BaseJoi, { Schema } from 'joi';
 import JoiDateExtensions from 'joi-date-extensions';
 import { SchemaFunction } from '..';
 import { getMetadata, getOptions, getGlobalArgs } from './MetadataHelpers';
 import { FieldDescription, DescKey } from '../decorators/FieldDescription';
+let incremental_id_value = 0;
 
 const Joi = BaseJoi.extend(JoiDateExtensions);
 /**
@@ -93,13 +94,18 @@ function buildJoiNumber(tp: FieldDescription) {
  * Builds a Joi array schema
  * @param tp Field description metadata
  */
-function buildJoiArray(tp: FieldDescription, visited: Map<any, BaseJoi.Schema>) {
+function buildJoiArray(
+  tp: FieldDescription,
+  visited: Map<any, BaseJoi.Schema>
+) {
   if (tp[DescKey.NON_EMPTY]) {
     tp[DescKey.MIN_LENGTH] = Math.max(tp[DescKey.MIN_LENGTH] || 0, 1);
   }
   let val = Joi.array();
   if (tp[DescKey.TYPE_INFO]) {
-    val = val.items(buildJoiChildren({ designType: tp[DescKey.TYPE_INFO] }, visited));
+    val = val.items(
+      buildJoiChildren({ designType: tp[DescKey.TYPE_INFO] }, visited)
+    );
   } else {
     val = val.items(Joi.any());
   }
@@ -163,7 +169,10 @@ function buildJoiGlobals(val: any, tp: FieldDescription) {
  * Returns Joi schema for a non-primitive or array object
  * @param tp Field description metadata
  */
-function buildJoiObject(tp: FieldDescription, visited: Map<any, BaseJoi.Schema>) {
+function buildJoiObject(
+  tp: FieldDescription,
+  visited: Map<any, BaseJoi.Schema>
+) {
   const payload: any = {};
   const metadata = getMetadata(tp.designType);
   if (!metadata) {
@@ -184,14 +193,17 @@ function buildJoiObject(tp: FieldDescription, visited: Map<any, BaseJoi.Schema>)
  * Checks the type of the field and returns the child schema accordingly
  * @param tp field description object
  */
-function buildJoiChildren(tp: FieldDescription, visited: Map<any, BaseJoi.Schema>) {
+function buildJoiChildren(
+  tp: FieldDescription,
+  visited: Map<any, BaseJoi.Schema>
+) {
   const primitives = ['String', 'Boolean', 'Number', 'Array', 'Date'];
   let val;
   if (tp.union && tp.union.length > 0) {
     val = Joi.alternatives(
       tp.union.map((x) => {
         console.log({ x });
-        if (typeof x !== "function" && x.isJoi) {
+        if (typeof x !== 'function' && x.isJoi) {
           return x;
         }
         return buildJoiRoot(x, visited);
@@ -223,12 +235,25 @@ function buildJoiChildren(tp: FieldDescription, visited: Map<any, BaseJoi.Schema
  * Returns the schema for the root type
  * @param tp type to validate
  */
-function buildJoiRoot(tp: any, visited?: Map<any, BaseJoi.Schema>): BaseJoi.Schema {
+function buildJoiRoot(
+  tp: any,
+  visited?: Map<any, BaseJoi.Schema>
+): BaseJoi.Schema {
   if (!visited) {
     visited = new Map();
   }
   if (visited.has(tp)) {
-    return Joi.lazy(() => visited.get(tp) || Joi.any());
+    let visitedRef = visited.get(tp);
+    if (visitedRef) {
+      let currentId = getId(visitedRef);
+      if (!currentId) {
+        currentId = `reference_${incremental_id_value++}`;
+        visitedRef = visitedRef.id(`reference_${incremental_id_value++}`);
+        visited.set(tp, visitedRef);
+      }
+      return Joi.link(currentId);
+    }
+    return Joi.lazy(() => Joi.any());
   }
   visited.set(tp, null);
   const metadata = getMetadata(tp);
@@ -292,4 +317,8 @@ export async function Validate(ctor: any, obj: any, save: boolean = true) {
   const cp: any = ctor;
   const validator: BaseJoi.Schema = getSchema(cp, save);
   return Joi.validate(obj, validator);
+}
+
+function getId(sc: Schema): string {
+  throw new Error('Not implemented!');
 }

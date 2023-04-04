@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Validate } from '.';
-import convert from 'joi-to-json-schema';
+// import convert from 'joi-to-json-schema';
 import {
   Optional,
   Required,
@@ -11,7 +11,7 @@ import {
   ValidOptions,
   CustomSchema,
 } from './decorators/BaseDecorators';
-import { getMetadata } from './utils/MetadataHelpers';
+// import { getMetadata } from './utils/MetadataHelpers';
 import Joi from 'joi';
 import { getSchema } from './utils/BuilderUtils';
 
@@ -68,15 +68,15 @@ export class FlowCondition {
   ])
   operator: ConditionOperator;
 }
-export type Condition = FlowCondition | CondititonTree;
+export type Condition = FlowCondition | ConditionTree;
 
-export class CondititonTree {
+export class ConditionTree {
   @ValidOptions(['and', 'or'])
   operator: 'and' | 'or';
-  @Union(FlowCondition, CondititonTree)
+  @Union(FlowCondition, ConditionTree)
   @Required()
   left: Condition;
-  @Union(FlowCondition, CondititonTree)
+  @Union(FlowCondition, ConditionTree)
   @Required()
   right: Condition;
 }
@@ -110,10 +110,10 @@ async function main(): Promise<void> {
       right: { key: 'a', operator: 'neq', value: 'a' },
     },
   };
-  const schema = getSchema(CondititonTree);
+  const schema = getSchema(ConditionTree);
   // console.log(convert(schema));
-  const validated = await Validate(CondititonTree, t);
-  // console.log(TestTest);
+  const validated = await Validate(ConditionTree, t);
+  console.log(TestTest);
 }
 
 main().catch(console.log);
