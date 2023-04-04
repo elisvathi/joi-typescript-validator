@@ -248,7 +248,7 @@ function buildJoiRoot(
       let currentId = getId(visitedRef);
       if (!currentId) {
         currentId = `reference_${incremental_id_value++}`;
-        visitedRef = visitedRef.id(`reference_${incremental_id_value++}`);
+        visitedRef = visitedRef.id(currentId);
         visited.set(tp, visitedRef);
       }
       return Joi.link(currentId);
