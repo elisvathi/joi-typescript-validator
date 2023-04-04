@@ -56,7 +56,7 @@ function setFieldDescription(
     existingInstance.get(target.constructor) || {}
   );
   const existingFields: { [key: string]: FieldDescription } =
-    existingInstance.get(target.constructor).fields || {};
+    existingInstance.get(target.constructor)?.fields || {};
   existingFields[propertyKey] = existingFields[propertyKey] || {};
   existingFields[propertyKey].designType = DesignType;
   existingFields[propertyKey].name = propertyKey;
@@ -72,7 +72,10 @@ function setFieldDescription(
     ...existingFields[propertyKey],
     ...description,
   };
-  existingInstance.get(target.constructor).fields = existingFields;
+  const existingCtorMeta = existingInstance.get(target.constructor);
+  if (existingCtorMeta) {
+    existingCtorMeta.fields = existingFields;
+  }
   Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
@@ -83,7 +86,10 @@ function setSchemaGlobals(target: any, fun: SchemaArgs) {
   );
   existingInstance = existingInstance || new Map();
   existingInstance.set(target, existingInstance.get(target) || {});
-  existingInstance.get(target).globalArgs = fun;
+  const existingConstructorArgs = existingInstance.get(target);
+  if (existingConstructorArgs) {
+    existingConstructorArgs.globalArgs = fun;
+  }
   Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
@@ -94,7 +100,10 @@ function setSchemaOptions(target: any, options: ValidationOptions) {
   );
   existingInstance = existingInstance || new Map();
   existingInstance.set(target, existingInstance.get(target) || {});
-  existingInstance.get(target).options = options;
+  const existingConstructorOptions = existingInstance.get(target);
+  if (existingConstructorOptions) {
+    existingConstructorOptions.options = options;
+  }
   Reflect.defineMetadata(MetadataKeys.Fields, existingInstance, target);
 }
 
@@ -292,20 +301,21 @@ export function DateString(
   format: string = 'YYYY-MM-DD',
   message?: string
 ): PropertyDecorator {
-  return function (target: any, propertyKey: string) {
-    const description: FieldDescription = {
-      [DescKey.DATE_STRING]: true,
-      dateStringFormat: format,
-    };
-    if (message) {
-      description.messages = new Map([[DescKey.DATE_STRING, message]]);
+  return function (target: any, propertyKey: string | symbol) {
+    if (typeof propertyKey === 'string') {
+      const description: FieldDescription = {
+        [DescKey.DATE_STRING]: true,
+        dateStringFormat: format,
+      };
+      if (message) {
+        description.messages = new Map([[DescKey.DATE_STRING, message]]);
+      }
+      setFieldDescription(target, propertyKey, description);
     }
-    setFieldDescription(target, propertyKey, description);
   };
 }
 
 export function CustomSchema(schema: SchemaArgs) {
-  console.log('CALLED CUSTOM SCHEMA');
   return (target: any, propertyKey?: string) => {
     if (propertyKey) {
       const description: FieldDescription = { customSchema: schema };
@@ -325,8 +335,10 @@ export function SchemaOptions(options: ValidationOptions): ClassDecorator {
 export function Union(
   ...args: Array<Class | Joi.AnySchema>
 ): PropertyDecorator {
-  return (target: any, propertyKey: string) => {
-    const description: FieldDescription = { union: args };
-    setFieldDescription(target, propertyKey, description);
+  return (target: any, propertyKey: string | symbol) => {
+    if (typeof propertyKey === 'string') {
+      const description: FieldDescription = { union: args };
+      setFieldDescription(target, propertyKey, description);
+    }
   };
 }

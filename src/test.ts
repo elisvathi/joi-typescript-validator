@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Validate } from '.';
-// import convert from 'joi-to-json-schema';
+//@ts-ignore
+import convert from 'joi-to-json';
 import {
   Optional,
   Required,
@@ -13,29 +14,29 @@ import {
 } from './decorators/BaseDecorators';
 // import { getMetadata } from './utils/MetadataHelpers';
 import Joi from 'joi';
-import { getSchema } from './utils/BuilderUtils';
+import { getSchema, getJsonSchema } from './utils/BuilderUtils';
 
 class FirstClass {
   @Required()
-  first_name: string;
+  first_name!: string;
 }
 
 class SecondClass {
   @Required()
-  email: string;
+  email!: string;
 }
 @SchemaOptions({ allowUnknown: true })
 class Test {
-  data: string;
+  data!: string;
   @Optional()
   @MinLength(3, 'Min length')
-  items: number[];
+  items!: number[];
   @Required('This is required')
   @Max(3, 'The maximum must be 3')
-  something: number;
+  something!: number;
   @Union(FirstClass, SecondClass)
   @Required()
-  extra: FirstClass | SecondClass;
+  extra!: FirstClass | SecondClass;
 }
 
 export type ConditionOperator =
@@ -51,9 +52,9 @@ export type ConditionOperator =
 
 export class FlowCondition {
   @Required()
-  key: string;
+  key!: string;
   @Required()
-  value: any;
+  value!: string;
   @Required()
   @ValidOptions([
     'eq',
@@ -66,25 +67,28 @@ export class FlowCondition {
     'exists',
     'not_null',
   ])
-  operator: ConditionOperator;
+  operator!: ConditionOperator;
 }
 export type Condition = FlowCondition | ConditionTree;
 
 export class ConditionTree {
   @ValidOptions(['and', 'or'])
-  operator: 'and' | 'or';
+  operator!: 'and' | 'or';
   @Union(FlowCondition, ConditionTree)
   @Required()
-  left: Condition;
+  left!: Condition;
   @Union(FlowCondition, ConditionTree)
   @Required()
-  right: Condition;
+  right!: Condition;
+  @Union(FlowCondition, ConditionTree)
+  @Required()
+  mid!: Condition;
 }
 class KV {
   @Required()
-  name: string;
+  name!: string;
   @Required()
-  value: string;
+  value!: string;
 }
 export class TestTest {
   @CustomSchema(((j: Joi.ArraySchema) =>
@@ -97,7 +101,7 @@ export class TestTest {
         })
       )
       .optional()) as any)
-  data: any[];
+  data!: any[];
 }
 
 async function main(): Promise<void> {
@@ -110,10 +114,9 @@ async function main(): Promise<void> {
       right: { key: 'a', operator: 'neq', value: 'a' },
     },
   };
-  const schema = getSchema(ConditionTree);
-  // console.log(convert(schema));
-  const validated = await Validate(ConditionTree, t);
-  console.log(TestTest);
+  const schema = getJsonSchema(ConditionTree);
+  console.log(JSON.stringify(schema));
+  // console.dir(JSON.stri, { depth: null });
 }
 
 main().catch(console.log);
